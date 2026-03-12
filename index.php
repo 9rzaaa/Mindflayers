@@ -536,7 +536,7 @@ $products = [
            MENU / PRODUCTS
         ═══════════════════════════════ */
         .menu-section {
-            background-color: var(--espresso);
+            background-color: var(--mocha);
             padding: 6rem 2.5rem;
             position: relative;
             overflow: hidden;
@@ -1014,7 +1014,7 @@ $products = [
                 <!-- Center nav items -->
                 <ul class="gap-1 mx-auto navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/AboutPage/about.php">Our Story</a></li>
                     <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Locations</a></li>
                 </ul>
@@ -1058,7 +1058,7 @@ $products = [
                         <a href="pages/ProductListPage/products.php" class="btn-primary-cta">
                             <i class="bi-grid-fill bi"></i> Explore Menu
                         </a>
-                        <a href="#experience" class="btn-ghost-cta">
+                        <a href="pages/AboutPage/about.php" class="btn-ghost-cta">
                             <i class="bi bi-play-circle"></i> Our Story
                         </a>
                     </div>
@@ -1097,44 +1097,6 @@ $products = [
             <?php endforeach; ?>
         </div>
     </div>
-
-
-    <!-- ═══════════════════════════════════════════════════════
-     ABOUT
-═══════════════════════════════════════════════════════ -->
-    <section class="about-section" id="about">
-        <div class="container">
-            <div class="align-items-center row gy-4 reveal">
-                <div class="text-md-start text-center col-md-auto">
-                    <div class="about-number">04</div>
-                    <div class="mt-1 section-label">Years of craft</div>
-                </div>
-
-                <div class="d-md-block about-divider d-none"></div>
-
-                <div class="col">
-                    <div class="section-label">Our Story</div>
-                    <h2 class="mb-3 section-title">Not just coffee.<br><em>A ritual.</em></h2>
-                    <p class="about-text">
-                        Born in the heart of Makati, <?= $shop_name ?> started as a small corner brew bar with one goal — to make every cup feel personal. We source directly from local farms, roast in-house weekly, and craft each drink with unhurried attention.
-                    </p>
-                </div>
-
-                <div class="mt-4 mt-md-0 col-md-auto">
-                    <div class="d-flex gap-4">
-                        <?php
-                        $stats = [['5K+', 'Happy Regulars'], ['3', 'Branches'], ['100%', 'Real Ingredients']];
-                        foreach ($stats as $stat): ?>
-                            <div class="text-center">
-                                <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 900; color: var(--espresso);"><?= $stat[0] ?></div>
-                                <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light);"><?= $stat[1] ?></div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
     <!-- ═══════════════════════════════════════════════════════
