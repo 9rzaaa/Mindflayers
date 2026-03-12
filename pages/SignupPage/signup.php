@@ -121,15 +121,16 @@
         .auth-card {
             flex: 0 0 50%;
             padding: 2.5rem 2.5rem;
-            background-color: #0E0908;
+            background: linear-gradient(145deg, #F9FBFF 0%, #F4F6FF 40%, #F1F5FF 100%);
+            color: var(--text-dark);
         }
 
         .social-login-btn {
             width: 100%;
             border-radius: 999px;
-            border: 1px solid rgba(194,178,128,0.3);
-            background-color: #1A1210;
-            color: rgba(245,245,240,0.85);
+            border: 1px solid rgba(141, 160, 210, 0.45);
+            background-color: #FFFFFF;
+            color: #2A2E43;
             font-size: 0.9rem;
             padding: 0.7rem 0.9rem;
             display: inline-flex;
@@ -155,7 +156,7 @@
             font-size: 0.78rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(245,245,240,0.6);
+            color: rgba(42,46,67,0.7);
         }
         .divider span {
             flex: 1;
@@ -167,13 +168,13 @@
             font-family: var(--font-display);
             font-size: 1.9rem;
             font-weight: 700;
-            color: var(--cream);
+            color: var(--espresso);
             letter-spacing: -0.02em;
         }
 
         .auth-subtitle {
             font-size: 0.92rem;
-            color: var(--text-light);
+            color: rgba(42,46,67,0.7);
             margin-top: 0.5rem;
             margin-bottom: 1.8rem;
         }
@@ -182,23 +183,23 @@
             font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(245,245,240,0.7);
+            color: rgba(42,46,67,0.75);
             margin-bottom: 0.35rem;
         }
 
         .form-control {
-            background-color: #1A1210;
+            background-color: #FFFFFF;
             border-radius: 999px;
-            border: 1px solid rgba(194,178,128,0.25);
+            border: 1px solid rgba(141, 160, 210, 0.55);
             padding: 0.65rem 0.95rem;
             font-size: 0.9rem;
-            color: var(--linen);
+            color: #2A2E43;
         }
         .form-control:focus {
             outline: none;
-            box-shadow: 0 0 0 1px rgba(194,178,128,0.5);
-            border-color: rgba(194,178,128,0.8);
-            background-color: #1F1512;
+            box-shadow: 0 0 0 1px rgba(99, 132, 255, 0.5);
+            border-color: rgba(99, 132, 255, 0.9);
+            background-color: #FFFFFF;
         }
 
         .form-control.is-valid {
@@ -211,8 +212,9 @@
         }
 
         .field-hint {
-            font-size: 0.78rem;
-            color: rgba(245,245,240,0.85);
+            font-size: 0.8rem;
+            color: #5A6480;
+            font-weight: 500;
         }
         .field-error {
             font-size: 0.75rem;
@@ -261,8 +263,9 @@
         }
 
         .helper-text {
-            font-size: 0.75rem;
-            color: rgba(245,245,240,0.5);
+            font-size: 0.8rem;
+            color: #5A6480;
+            font-weight: 500;
         }
 
         .form-check-label {
