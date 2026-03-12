@@ -39,10 +39,11 @@ $iconMap = [
         body { background: #F9F7F3; font-family: 'DM Sans', sans-serif; }
         .card-hero { border: 1px solid rgba(0,0,0,.06); border-radius: 0.8rem; background: #fff; }
         .card-hero img { border-top-left-radius: 0.8rem; border-top-right-radius: 0.8rem; }
-        .modal-header { border-bottom: 1px solid #e8e5e0; }
-        .modal-body { background: #fcfbf8; }
-        .section-heading { font-weight: 600; margin-top: 1.2rem; margin-bottom: 0.75rem; text-transform: uppercase; font-size: 0.93rem; letter-spacing: 0.04em; }
-        .section-heading i { margin-right: 0.4rem; color: #7f5a3f; }
+        .modal-content { border-radius: 1rem; overflow: hidden; }
+        .modal-header { border-bottom: 1px solid #e8e5e0; background: linear-gradient(110deg, #f8f1e8, #fff7ef); }
+        .modal-body { background: radial-gradient(circle at top left, #fffaf3 0%, #fef9f5 60%, #f6efe4 100%); }
+        .section-heading { font-family: var(--font-serif); font-weight: 700; margin-top: 1.2rem; margin-bottom: 0.75rem; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 0.06em; color: #5b3f2f; }
+        .section-heading i { margin-right: 0.4rem; color: #8b5e3c; }
         .tag-badge { border-radius: 0.45rem; padding: 0.22rem 0.65rem; }
         .tasting-badge { background: #fff; border: 1px solid #e2dace; border-radius: 0.55rem; color: #6b5138; }
         .spec-row { margin-bottom: 0.55rem; }
@@ -120,14 +121,10 @@ $iconMap = [
                     <p class="mb-0 text-secondary" style="font-size: 0.9rem;">"<?= html($selectedProduct['tagline']) ?>"</p>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div>  
             <div class="modal-body p-4">
                 <div class="row g-3 mb-4">
-                    <div class="col-md-5">
-                        <img src="<?= html($selectedProduct['image']) ?>" alt="<?= html($selectedProduct['name']) ?>" class="img-fluid rounded" style="height: 260px; object-fit: cover; width: 100%; border:1px solid #e5e0d9;" />
-                    </div>
-                    <div class="col-md-7">
-                        <h4 class="mb-2"><?= html($selectedProduct['name']) ?></h4>
+                    <div class="col-12">
                         <p class="text-muted mb-3"><?= html($selectedProduct['tagline']) ?></p>
                         <div class="d-flex flex-wrap gap-2 mb-3">
                             <span class="badge bg-warning text-dark"><?= html($selectedProduct['badge']) ?></span>
@@ -172,7 +169,7 @@ $iconMap = [
                 </section>
 
                 <section class="mb-4">
-                    <h6 class="section-heading"><i class="bi bi-list-check"></i> Key Specifications</h6>
+                    <h4 class="section-heading" style="font-size:1.2rem; font-family:var(--font-serif);"> <i class="bi bi-list-check"></i> Key Specifications</h4>
                     <div class="row g-2 mb-3">
                         <?php
                         $mainSpecs = array_filter($selectedProduct['specs'], function ($spec) {
