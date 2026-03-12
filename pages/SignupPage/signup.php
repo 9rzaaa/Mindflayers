@@ -124,6 +124,45 @@
             background-color: #0E0908;
         }
 
+        .social-login-btn {
+            width: 100%;
+            border-radius: 999px;
+            border: 1px solid rgba(194,178,128,0.3);
+            background-color: #1A1210;
+            color: rgba(245,245,240,0.85);
+            font-size: 0.9rem;
+            padding: 0.7rem 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.55rem;
+            transition: background-color var(--transition), transform 0.15s ease;
+        }
+        .social-login-btn i {
+            font-size: 1rem;
+        }
+        .social-login-btn:hover {
+            background-color: #231714;
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.4rem 0 1.1rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(245,245,240,0.6);
+        }
+        .divider span {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(194,178,128,0.5), transparent);
+        }
+
         .auth-title {
             font-family: var(--font-display);
             font-size: 1.9rem;
@@ -160,6 +199,29 @@
             box-shadow: 0 0 0 1px rgba(194,178,128,0.5);
             border-color: rgba(194,178,128,0.8);
             background-color: #1F1512;
+        }
+
+        .form-control.is-valid {
+            border-color: #4caf50;
+            box-shadow: 0 0 0 1px rgba(76,175,80,0.5);
+        }
+        .form-control.is-invalid {
+            border-color: #ff5252;
+            box-shadow: 0 0 0 1px rgba(255,82,82,0.4);
+        }
+
+        .field-hint {
+            font-size: 0.78rem;
+            color: rgba(245,245,240,0.85);
+        }
+        .field-error {
+            font-size: 0.75rem;
+            color: #ff8080;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .field-error.visible {
+            display: block;
         }
 
         .btn-submit {
@@ -262,25 +324,57 @@
     <div class="auth-card d-flex flex-column justify-content-between">
         <div>
             <h2 class="auth-title">Create your account</h2>
-            <p class="auth-subtitle">Sign up in under a minute. No spam, just coffee.</p>
+            <p class="auth-subtitle">Sign up in seconds or continue with social.</p>
+
+            <!-- Social login first (reduces friction) -->
+            <button type="button" class="social-login-btn">
+                <i class="bi bi-google"></i>
+                Continue with Google
+            </button>
+            <button type="button" class="social-login-btn">
+                <i class="bi bi-facebook"></i>
+                Continue with Facebook
+            </button>
+
+            <div class="divider">
+                <span></span>
+                <div>or sign up with email</div>
+                <span></span>
+            </div>
 
             <form id="signup-form" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="name">Full name</label>
                     <input type="text" class="form-control" id="name" placeholder="e.g. Alex Reyes" required>
+                    <div class="field-error" id="error-name">Please enter your full name.</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email">Email address</label>
                     <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
-                    <div class="helper-text mt-1">We’ll send your digital stamps and receipts here.</div>
+                    <div class="field-hint">We’ll send your digital stamps and receipts here.</div>
+                    <div class="field-error" id="error-email">Enter a valid email address.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="phone">Mobile number</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="+63 912 345 6789" maxlength="17" required>
+                    <div class="field-hint">Format: +63 912 345 6789</div>
+                    <div class="field-error" id="error-phone">Use the format +63 912 345 6789.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="birthdate">Birthday</label>
+                    <input type="text" class="form-control" id="birthdate" placeholder="MM/DD/YYYY" maxlength="10" required>
+                    <div class="field-hint">Format: MM/DD/YYYY</div>
+                    <div class="field-error" id="error-birthdate">Enter a valid date (MM/DD/YYYY).</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="At least 8 characters" minlength="8" required>
+                    <div class="field-error" id="error-password">Password must be at least 8 characters.</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="confirm_password">Confirm password</label>
                     <input type="password" class="form-control" id="confirm_password" placeholder="Repeat your password" minlength="8" required>
+                    <div class="field-error" id="error-confirm">Passwords do not match.</div>
                 </div>
 
                 <div class="form-check mb-3">
@@ -315,29 +409,123 @@
 <script>
     const form = document.getElementById('signup-form');
 
+    const fields = {
+        name: document.getElementById('name'),
+        email: document.getElementById('email'),
+        phone: document.getElementById('phone'),
+        birthdate: document.getElementById('birthdate'),
+        password: document.getElementById('password'),
+        confirm: document.getElementById('confirm_password')
+    };
+
+    function setValidity(input, isValid, errorId) {
+        const errorEl = document.getElementById(errorId);
+        if (isValid) {
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+            if (errorEl) errorEl.classList.remove('visible');
+        } else {
+            input.classList.remove('is-valid');
+            input.classList.add('is-invalid');
+            if (errorEl) errorEl.classList.add('visible');
+        }
+    }
+
+    // Phone input mask: +63 912 345 6789
+    fields.phone.addEventListener('input', function () {
+        let value = this.value.replace(/[^\d]/g, '');
+
+        if (value.startsWith('0')) value = value.slice(1);
+        if (!value.startsWith('63')) value = '63' + value;
+
+        let formatted = '+' + value.substring(0, 2);
+        if (value.length > 2) formatted += ' ' + value.substring(2, 5);
+        if (value.length > 5) formatted += ' ' + value.substring(5, 8);
+        if (value.length > 8) formatted += ' ' + value.substring(8, 12);
+
+        this.value = formatted;
+
+        const isValid = /^\+63 \d{3} \d{3} \d{4}$/.test(this.value);
+        setValidity(this, isValid, 'error-phone');
+    });
+
+    // Birthdate input mask: MM/DD/YYYY
+    fields.birthdate.addEventListener('input', function () {
+        let v = this.value.replace(/[^\d]/g, '');
+        if (v.length > 2 && v.length <= 4) {
+            v = v.slice(0, 2) + '/' + v.slice(2);
+        } else if (v.length > 4) {
+            v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4, 8);
+        }
+        this.value = v.slice(0, 10);
+
+        const parts = this.value.split('/');
+        let isValid = false;
+        if (parts.length === 3) {
+            const m = parseInt(parts[0], 10);
+            const d = parseInt(parts[1], 10);
+            const y = parseInt(parts[2], 10);
+            const date = new Date(y, m - 1, d);
+            isValid =
+                m >= 1 && m <= 12 &&
+                d >= 1 && d <= 31 &&
+                !isNaN(date.getTime()) &&
+                date.getMonth() === m - 1 &&
+                date.getDate() === d;
+        }
+        setValidity(this, isValid, 'error-birthdate');
+    });
+
+    // Inline validation for other fields
+    fields.name.addEventListener('input', function () {
+        setValidity(this, this.value.trim().length > 1, 'error-name');
+    });
+
+    fields.email.addEventListener('input', function () {
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setValidity(this, pattern.test(this.value.trim()), 'error-email');
+    });
+
+    fields.password.addEventListener('input', function () {
+        const isValid = this.value.length >= 8;
+        setValidity(this, isValid, 'error-password');
+        // Also re-check confirm field
+        if (fields.confirm.value.length > 0) {
+            const confirmValid = fields.confirm.value === this.value && isValid;
+            setValidity(fields.confirm, confirmValid, 'error-confirm');
+        }
+    });
+
+    fields.confirm.addEventListener('input', function () {
+        const isValid = this.value.length >= 8 && this.value === fields.password.value;
+        setValidity(this, isValid, 'error-confirm');
+    });
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-        const confirm = document.getElementById('confirm_password').value;
+        // Trigger all validators
+        fields.name.dispatchEvent(new Event('input'));
+        fields.email.dispatchEvent(new Event('input'));
+        fields.phone.dispatchEvent(new Event('input'));
+        fields.birthdate.dispatchEvent(new Event('input'));
+        fields.password.dispatchEvent(new Event('input'));
+        fields.confirm.dispatchEvent(new Event('input'));
 
-        if (!name || !email || !password || !confirm) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters.');
-            return;
-        }
-        if (password !== confirm) {
-            alert('Passwords do not match.');
+        const hasError = document.querySelector('.form-control.is-invalid');
+        if (hasError) {
+            alert('Please fix the highlighted fields before continuing.');
             return;
         }
 
         alert('Signup successful (demo only – no data is stored).');
         form.reset();
+        document.querySelectorAll('.form-control').forEach((el) => {
+            el.classList.remove('is-valid', 'is-invalid');
+        });
+        document.querySelectorAll('.field-error').forEach((el) => {
+            el.classList.remove('visible');
+        });
     });
 </script>
 </body>
