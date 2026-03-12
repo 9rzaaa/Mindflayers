@@ -121,16 +121,16 @@
         .auth-card {
             flex: 0 0 50%;
             padding: 2.5rem 2.5rem;
-            background: linear-gradient(145deg, #F9FBFF 0%, #F4F6FF 40%, #F1F5FF 100%);
+            background: linear-gradient(145deg, #FDF7ED 0%, #FAF1DF 35%, #F5E6CC 100%);
             color: var(--text-dark);
         }
 
         .social-login-btn {
             width: 100%;
             border-radius: 999px;
-            border: 1px solid rgba(141, 160, 210, 0.45);
+            border: 1px solid rgba(194,178,128,0.6);
             background-color: #FFFFFF;
-            color: #2A2E43;
+            color: var(--espresso);
             font-size: 0.9rem;
             padding: 0.7rem 0.9rem;
             display: inline-flex;
@@ -138,13 +138,14 @@
             justify-content: center;
             gap: 0.5rem;
             margin-bottom: 0.55rem;
-            transition: background-color var(--transition), transform 0.15s ease;
+            transition: background-color var(--transition), transform 0.15s ease, box-shadow 0.15s ease;
         }
         .social-login-btn i {
             font-size: 1rem;
         }
         .social-login-btn:hover {
-            background-color: #231714;
+            background-color: var(--cream);
+            box-shadow: 0 8px 22px rgba(59,42,42,0.18);
             transform: translateY(-1px);
         }
 
@@ -156,12 +157,12 @@
             font-size: 0.78rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(42,46,67,0.7);
+            color: var(--text-light);
         }
         .divider span {
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(194,178,128,0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(194,178,128,0.7), transparent);
         }
 
         .auth-title {
@@ -190,15 +191,15 @@
         .form-control {
             background-color: #FFFFFF;
             border-radius: 999px;
-            border: 1px solid rgba(141, 160, 210, 0.55);
+            border: 1px solid rgba(194,178,128,0.65);
             padding: 0.65rem 0.95rem;
             font-size: 0.9rem;
-            color: #2A2E43;
+            color: var(--espresso);
         }
         .form-control:focus {
             outline: none;
-            box-shadow: 0 0 0 1px rgba(99, 132, 255, 0.5);
-            border-color: rgba(99, 132, 255, 0.9);
+            box-shadow: 0 0 0 1px rgba(194,178,128,0.55);
+            border-color: rgba(194,178,128,0.95);
             background-color: #FFFFFF;
         }
 
