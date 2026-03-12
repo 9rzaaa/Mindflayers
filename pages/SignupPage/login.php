@@ -262,12 +262,20 @@
             align-items: center;
             gap: 0.35rem;
             font-size: 0.85rem;
-            color: rgba(245,245,240,0.7);
+            color: rgba(245,245,240,0.9);
             text-decoration: none;
             margin-top: 1.4rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(232,216,176,0.7);
+            background-color: rgba(14,9,8,0.4);
+            transition: background-color var(--transition), border-color var(--transition), transform 0.15s ease;
         }
         .back-link:hover {
-            color: var(--cream);
+            color: var(--espresso);
+            background-color: var(--cream);
+            border-color: var(--cream);
+            transform: translateY(-1px);
         }
 
         @media (max-width: 991.98px) {
