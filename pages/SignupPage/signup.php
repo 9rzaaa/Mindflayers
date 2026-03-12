@@ -354,19 +354,16 @@
                 <div class="mb-3">
                     <label class="form-label" for="email">Email address</label>
                     <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
-                    <div class="field-hint">We’ll send your digital stamps and receipts here.</div>
                     <div class="field-error" id="error-email">Enter a valid email address.</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="phone">Mobile number</label>
                     <input type="tel" class="form-control" id="phone" placeholder="+63 912 345 6789" maxlength="17" required>
-                    <div class="field-hint">Format: +63 912 345 6789</div>
                     <div class="field-error" id="error-phone">Use the format +63 912 345 6789.</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="birthdate">Birthday</label>
                     <input type="text" class="form-control" id="birthdate" placeholder="MM/DD/YYYY" maxlength="10" required>
-                    <div class="field-hint">Format: MM/DD/YYYY</div>
                     <div class="field-error" id="error-birthdate">Enter a valid date (MM/DD/YYYY).</div>
                 </div>
                 <div class="mb-3">
