@@ -1,122 +1,10 @@
 <?php
 // pages/ProductListPage/products.php
 
-$products = [
-    [
-        "id"       => 1,
-        "name"     => "Spanish Latte",
-        "tagline"  => "Sweet, bold, and impossibly silky.",
-        "price"    => 180,
-        "category" => "Espresso",
-        "badge"    => "Bestseller",
-        "image"    => "assets/images/spanish-latte.jpg",
-        "desc"     => "A rich double shot of espresso balanced with sweetened condensed milk and whole milk, creating a caramel-sweet, velvety cup that keeps you coming back.",
-        "specs" => [
-            ["icon" => "bi-thermometer-half", "label" => "Temperature", "value" => "Hot / Iced"],
-            ["icon" => "bi-cup-straw",         "label" => "Base",        "value" => "Espresso"],
-            ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Condensed + Whole"],
-            ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Medium–High"],
-        ],
-        "tags"     => ["Sweet", "Creamy", "Bold"],
-        "calories" => "~240 kcal",
-        "volume"   => "12 oz",
-        "rating"   => 4.9,
-        "reviews"  => 312,
-        "emoji"    => "☕",
-    ],
-    [
-        "id"       => 2,
-        "name"     => "Matcha Latte",
-        "tagline"  => "Earthy, calm, and beautifully green.",
-        "price"    => 195,
-        "category" => "Non-Espresso",
-        "badge"    => "Fan Fave",
-        "image"    => "assets/images/matcha-latte.jpg",
-        "desc"     => "Ceremonial-grade Japanese matcha whisked smooth and layered over steamed oat milk. Subtle sweetness, grassy depth, and a calm clean finish.",
-        "specs" => [
-            ["icon" => "bi-thermometer-half", "label" => "Temperature", "value" => "Hot / Iced"],
-            ["icon" => "bi-cup-straw",         "label" => "Base",        "value" => "Ceremonial Matcha"],
-            ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Oat Milk"],
-            ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Low–Medium"],
-        ],
-        "tags"     => ["Earthy", "Smooth", "Calming"],
-        "calories" => "~190 kcal",
-        "volume"   => "12 oz",
-        "rating"   => 4.8,
-        "reviews"  => 204,
-        "emoji"    => "🍵",
-    ],
-    [
-        "id"       => 3,
-        "name"     => "Ube Latte",
-        "tagline"  => "Dreamy purple magic in a cup.",
-        "price"    => 195,
-        "category" => "Non-Espresso",
-        "badge"    => "Local Pride",
-        "image"    => "assets/images/ube-latte.jpg",
-        "desc"     => "Real ube halaya blended into steamed milk creates this gorgeous violet drink — gently sweet, subtly nutty, and unmistakably Filipino.",
-        "specs" => [
-            ["icon" => "bi-thermometer-half", "label" => "Temperature", "value" => "Hot / Iced"],
-            ["icon" => "bi-cup-straw",         "label" => "Base",        "value" => "Ube Halaya"],
-            ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Whole / Oat"],
-            ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Caffeine-Free"],
-        ],
-        "tags"     => ["Sweet", "Nutty", "Unique"],
-        "calories" => "~210 kcal",
-        "volume"   => "12 oz",
-        "rating"   => 4.9,
-        "reviews"  => 278,
-        "emoji"    => "💜",
-    ],
-    [
-        "id"       => 4,
-        "name"     => "Iced Sea Salt",
-        "tagline"  => "Cold, bold, and perfectly balanced.",
-        "price"    => 170,
-        "category" => "Cold Brew",
-        "badge"    => "Refreshing",
-        "image"    => "assets/images/iced-seasalt.jpg",
-        "desc"     => "Our house cold brew — steeped 24 hours — topped with a whisper of lightly salted cream that slowly folds into the coffee as you sip.",
-        "specs" => [
-            ["icon" => "bi-thermometer-half", "label" => "Temperature", "value" => "Iced Only"],
-            ["icon" => "bi-cup-straw",         "label" => "Base",        "value" => "24hr Cold Brew"],
-            ["icon" => "bi-droplet-half",      "label" => "Topping",     "value" => "Sea Salt Cream"],
-            ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "High"],
-        ],
-        "tags"     => ["Bold", "Salty-Sweet", "Refreshing"],
-        "calories" => "~160 kcal",
-        "volume"   => "16 oz",
-        "rating"   => 4.7,
-        "reviews"  => 189,
-        "emoji"    => "🧊",
-    ],
-    [
-        "id"       => 5,
-        "name"     => "Caramel Macchiato",
-        "tagline"  => "Layers of warmth in every sip.",
-        "price"    => 185,
-        "category" => "Espresso",
-        "badge"    => "Classic",
-        "image"    => "assets/images/caramel-macchiato.jpg",
-        "desc"     => "Vanilla-infused milk, a bold espresso mark, and a generous drizzle of house caramel. Layered to look as good as it tastes.",
-        "specs" => [
-            ["icon" => "bi-thermometer-half", "label" => "Temperature", "value" => "Hot / Iced"],
-            ["icon" => "bi-cup-straw",         "label" => "Base",        "value" => "Espresso"],
-            ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Vanilla Whole Milk"],
-            ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Medium–High"],
-        ],
-        "tags"     => ["Sweet", "Layered", "Warm"],
-        "calories" => "~250 kcal",
-        "volume"   => "12 oz",
-        "rating"   => 4.8,
-        "reviews"  => 241,
-        "emoji"    => "🍯",
-    ],
-];
+require_once __DIR__ . '/products-data.php';
 
-$categories   = ["All", "Espresso", "Non-Espresso", "Cold Brew"];
-$active_cat   = isset($_GET['cat']) ? $_GET['cat'] : 'All';
-$filtered     = $active_cat === 'All'
+$active_cat = isset($_GET['cat']) ? $_GET['cat'] : 'All';
+$filtered = $active_cat === 'All'
     ? $products
     : array_values(array_filter($products, fn($p) => $p['category'] === $active_cat));
 
@@ -310,7 +198,9 @@ foreach ($products as $p) {
             border-radius: 6px; overflow: hidden;
             height: 100%; display: flex; flex-direction: column;
             transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+            cursor: pointer;
         }
+        .product-card:hover { box-shadow: 0 20px 44px rgba(0,0,0,0.08); }
         .product-card:hover {
             transform: translateY(-7px);
             box-shadow: 0 24px 64px rgba(59,42,42,0.13);
@@ -319,7 +209,7 @@ foreach ($products as $p) {
 
         /* Image */
         .card-img-wrap {
-            position: relative; width: 100%; padding-top: 66%;
+            position: relative; width: 100%; padding-top: 66%;  
             background: var(--cream); overflow: hidden;
         }
         .card-img-wrap img {
@@ -438,6 +328,19 @@ foreach ($products as $p) {
             padding: 0.7rem 1.35rem; border-radius: 2px; border: none;
             display: flex; align-items: center; gap: 0.45rem; cursor: pointer; text-decoration: none;
             transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .add-cart-btn {
+            background: #8b5e3c !important;
+            color: #fff !important;
+        }
+        .add-cart-btn:hover,
+        #modal-add-cart {
+            background: #8b5e3c !important;
+            color: #fff !important;
+        }
+        #modal-add-cart:hover {
+            background: #79523a !important;
+            color: #fff !important;
         }
         .btn-add:hover {
             background: var(--mocha); color: var(--cream);
@@ -567,7 +470,7 @@ foreach ($products as $p) {
             <div class="row g-4">
                 <?php foreach ($filtered as $i => $p): ?>
                 <div class="col-md-6 col-xl-4 reveal" style="transition-delay:<?= $i * 0.08 ?>s">
-                    <div class="product-card">
+                    <div class="product-card" data-product-id="<?= $p['id'] ?>">
 
                         <!-- ── IMAGE — placeholder until real image added ── -->
                         <div class="card-img-wrap">
@@ -597,9 +500,11 @@ foreach ($products as $p) {
                                 <div class="price-val">₱<?= number_format($p['price']) ?></div>
                                 <div class="price-sub"><?= $p['volume'] ?> · <?= $p['category'] ?></div>
                             </div>
-                            <a href="#" class="btn-add">
-                                Add to Cart <i class="bi bi-plus-circle"></i>
-                            </a>
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn-add add-cart-btn" data-product-id="<?= $p['id'] ?>">
+                                    Add to Cart <i class="bi bi-plus-circle"></i>
+                                </a>
+                            </div>
                         </div>
 
                     </div><!-- /.product-card -->
@@ -622,6 +527,56 @@ foreach ($products as $p) {
     </div>
 </footer>
 
+<!-- Quick view product modal -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="productDetailModalLabel">Product</h5>
+                    <p id="modal-tagline" class="mb-0 text-muted" style="font-size:0.9rem;"></p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <img id="modal-image" src="" alt="" class="img-fluid rounded" style="object-fit:cover; width:100%; height:220px;">
+                    </div>
+                    <div class="col-md-7">
+                        <h4 id="modal-name"></h4>
+                        <p id="modal-desc" class="mb-3"></p>
+                        <div class="mb-2"><strong>Price:</strong> <span id="modal-price"></span></div>
+                        <div class="mb-2"><strong>Volume:</strong> <span id="modal-volume"></span></div>
+                        <div class="mb-2"><strong>Category:</strong> <span id="modal-cat"></span></div>
+                        <div class="mb-2"><strong>Calories:</strong> <span id="modal-cals"></span></div>
+                        <a href="#" id="modal-add-cart" class="btn btn-sm btn-primary mt-2">Add to Cart</a>
+                    </div>
+                </div>
+
+                <hr>
+                <div>
+                    <h6 class="section-heading"><i class="bi bi-list-check"></i> Specifications</h6>
+                    <div id="modal-specs" class="row gy-2"></div>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="section-heading"><i class="bi bi-chat-square-text"></i> Ratings & Reviews</h6>
+                    <p id="modal-reviews"></p>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="section-heading"><i class="bi bi-truck"></i> Shipping & Pickup</h6>
+                    <ul class="ps-3 mb-0">
+                        <li>Local delivery 30-45 min</li>
+                        <li>In-store pickup available</li>
+                        <li>Recyclable packaging</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -637,15 +592,76 @@ foreach ($products as $p) {
     }, { threshold: 0.1 });
     revealEls.forEach(el => obs.observe(el));
 
-    // Add to order feedback
-    document.querySelectorAll('.btn-add').forEach(btn => {
+    // Product data for quick view modal
+    const productsData = <?= json_encode($products, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
+    const productModal = new bootstrap.Modal(document.getElementById('productDetailModal'));
+
+    function formatSpecs(specs) {
+        if (!Array.isArray(specs)) return '';
+        return specs.map(spec => `
+            <div class="col-12 col-sm-6">
+                <div class="bg-light rounded p-2">
+                    <strong>${spec.label}:</strong> ${spec.value}
+                </div>
+            </div>`) .join('');
+    }
+
+    function showProductModal(product) {
+        if (!product) return;
+
+        const placeholder = 'https://via.placeholder.com/700x420?text=Mindflayer+Coffee';
+        const imageUrl = product.image && product.image.trim() ? product.image : placeholder;
+
+        document.getElementById('productDetailModalLabel').textContent = product.name;
+        document.getElementById('modal-tagline').textContent = product.tagline;
+        document.getElementById('modal-name').textContent = product.name;
+        document.getElementById('modal-desc').textContent = product.desc;
+        document.getElementById('modal-image').src = imageUrl;
+        document.getElementById('modal-image').alt = product.name;
+        document.getElementById('modal-price').textContent = '₱' + Number(product.price).toLocaleString();
+        document.getElementById('modal-volume').textContent = product.volume;
+        document.getElementById('modal-cat').textContent = product.category;
+        document.getElementById('modal-cals').textContent = product.calories;
+        document.getElementById('modal-reviews').textContent = `Average ★${product.rating} • ${product.reviews} reviews`;
+        document.getElementById('modal-specs').innerHTML = formatSpecs(product.specs);
+
+        document.getElementById('modal-add-cart').dataset.productId = product.id;
+        productModal.show();
+    }
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('.add-cart-btn')) {
+                return;
+            }
+            const id = Number(this.dataset.productId);
+            const prod = productsData.find(item => item.id === id);
+            showProductModal(prod);
+        });
+    });
+
+    // Add to cart button interactions for list and modal
+    function markAdded(btn) {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Added!';
+        btn.style.background = '#5C7A4A';
+        setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.background = '';
+        }, 1800);
+    }
+
+    document.querySelectorAll('.add-cart-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            const orig = this.innerHTML;
-            this.innerHTML = '<i class="bi bi-check-circle-fill"></i> Added!';
-            this.style.background = '#5C7A4A';
-            setTimeout(() => { this.innerHTML = orig; this.style.background = ''; }, 1800);
+            e.stopPropagation();
+            markAdded(this);
         });
+    });
+
+    document.getElementById('modal-add-cart').addEventListener('click', function(e) {
+        e.preventDefault();
+        markAdded(this);
     });
 </script>
 
