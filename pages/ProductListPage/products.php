@@ -120,6 +120,13 @@ $filtered     = $active_cat === 'All'
     ? $products
     : array_values(array_filter($products, fn($p) => $p['category'] === $active_cat));
 
+$search = isset($_GET['q']) ? trim($_GET['q']) : '';
+if ($search !== '') {
+    $filtered = array_values(array_filter($filtered, function($p) use ($search) {
+        return stripos($p['name'], $search) !== false;
+    }));
+}
+
 $cat_counts = [];
 foreach ($products as $p) {
     $cat_counts[$p['category']] = ($cat_counts[$p['category']] ?? 0) + 1;
@@ -265,14 +272,33 @@ foreach ($products as $p) {
         .products-section { padding: 2.5rem; }
 
         .results-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            padding-bottom: 1.75rem;
         }
         .results-count {
             font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
             color: var(--text-muted);
         }
         .results-count strong { color: var(--mocha); font-weight: 600; }
+
+        .search-form {
+            flex: 1;
+            max-width: 420px;
+        }
+        .search-input {
+            border-radius: 999px;
+            border: 1px solid var(--cream);
+            padding: 0.65rem 1.1rem;
+            font-size: 0.9rem;
+            background-color: #fff;
+        }
+        .search-input::placeholder {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
 
         /* ═══════════════════════════════
            PRODUCT CARD
@@ -446,6 +472,7 @@ foreach ($products as $p) {
             .products-section { padding: 1.5rem; }
             .page-header { padding: 3rem 1.5rem 2.5rem; }
             .filter-bar { padding: 0 1rem; }
+            .results-bar { flex-direction: column; align-items: flex-start; }
             .c-body, .c-specs, .c-tags, .c-meta, .c-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
         }
     </style>
@@ -517,6 +544,19 @@ foreach ($products as $p) {
         <div class="container">
 
             <div class="results-bar">
+                <form method="get" class="search-form">
+                    <?php if ($active_cat !== 'All'): ?>
+                        <input type="hidden" name="cat" value="<?= htmlspecialchars($active_cat) ?>">
+                    <?php endif; ?>
+                    <input
+                        type="search"
+                        name="q"
+                        value="<?= htmlspecialchars($search) ?>"
+                        class="form-control search-input"
+                        placeholder="Search for coffee, lattes, and more"
+                        aria-label="Search drinks"
+                    >
+                </form>
                 <p class="results-count mb-0">
                     Showing <strong><?= count($filtered) ?></strong>
                     drink<?= count($filtered) !== 1 ? 's' : '' ?>
@@ -545,53 +585,9 @@ foreach ($products as $p) {
                             <span class="card-cat-pill"><?= htmlspecialchars($p['category']) ?></span>
                         </div>
 
-                        <!-- ── SECTION 1: Name + Description (Tip 22: padded) ── -->
+                        <!-- ── SECTION 1: Name only (details moved to popup) ── -->
                         <div class="c-body">
                             <h2 class="c-name"><?= htmlspecialchars($p['name']) ?></h2>
-                            <p class="c-tagline"><?= htmlspecialchars($p['tagline']) ?></p>
-                            <p class="c-desc"><?= htmlspecialchars($p['desc']) ?></p>
-                        </div>
-
-                        <!-- ── SECTION 2: Flavor Tags ── -->
-                        <div class="c-tags">
-                            <?php foreach ($p['tags'] as $tag): ?>
-                            <span class="tag"><?= htmlspecialchars($tag) ?></span>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <!-- ── SECTION 3: Specs (Tip 6: icons + labels) ── -->
-                        <div class="c-specs">
-                            <p class="specs-head"><i class="bi bi-info-circle me-1"></i>Drink Details</p>
-                            <div class="specs-grid">
-                                <?php foreach ($p['specs'] as $spec): ?>
-                                <div class="spec-item">
-                                    <i class="bi <?= $spec['icon'] ?> s-icon"></i>
-                                    <div>
-                                        <div class="s-label"><?= $spec['label'] ?></div>
-                                        <div class="s-value"><?= $spec['value'] ?></div>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- ── SECTION 4: Rating + Meta ── -->
-                        <div class="c-meta">
-                            <div class="meta-i">
-                                <span class="stars">
-                                    <?php
-                                    $full  = (int)floor($p['rating']);
-                                    $half  = ($p['rating'] - $full) >= 0.5 ? 1 : 0;
-                                    $empty = 5 - $full - $half;
-                                    echo str_repeat('★', $full);
-                                    if ($half) echo '½';
-                                    echo str_repeat('☆', $empty);
-                                    ?>
-                                </span>
-                                <?= $p['rating'] ?> (<?= $p['reviews'] ?>)
-                            </div>
-                            <div class="meta-i"><i class="bi bi-fire"></i><?= $p['calories'] ?></div>
-                            <div class="meta-i"><i class="bi bi-cup"></i><?= $p['volume'] ?></div>
                         </div>
 
                         <!-- ── SECTION 5: Price + CTA ── -->
@@ -602,7 +598,7 @@ foreach ($products as $p) {
                                 <div class="price-sub"><?= $p['volume'] ?> · <?= $p['category'] ?></div>
                             </div>
                             <a href="#" class="btn-add">
-                                Add to Order <i class="bi bi-plus-circle"></i>
+                                Add to Cart <i class="bi bi-plus-circle"></i>
                             </a>
                         </div>
 
