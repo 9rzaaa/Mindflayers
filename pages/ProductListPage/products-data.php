@@ -17,6 +17,8 @@ $products = [
             ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Condensed + Whole"],
             ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Medium–High"],
         ],
+    
+        
         "tags"     => ["Sweet", "Creamy", "Bold"],
         "calories" => "~240 kcal",
         "volume"   => "12 oz",
@@ -39,6 +41,7 @@ $products = [
             ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Oat Milk"],
             ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Low–Medium"],
         ],
+        
         "tags"     => ["Earthy", "Smooth", "Calming"],
         "calories" => "~190 kcal",
         "volume"   => "12 oz",
@@ -61,6 +64,7 @@ $products = [
             ["icon" => "bi-droplet-half",      "label" => "Milk",        "value" => "Whole / Oat"],
             ["icon" => "bi-lightning-charge",  "label" => "Caffeine",    "value" => "Caffeine-Free"],
         ],
+        
         "tags"     => ["Sweet", "Nutty", "Unique"],
         "calories" => "~210 kcal",
         "volume"   => "12 oz",
@@ -85,7 +89,7 @@ $products = [
         ],
         "tags"     => ["Bold", "Salty-Sweet", "Refreshing"],
         "calories" => "~160 kcal",
-        "volume"   => "16 oz",
+        "volume"   => "16 oz",  
         "rating"   => 4.7,
         "reviews"  => 189,
         "emoji"    => "🧊",
