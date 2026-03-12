@@ -347,6 +347,57 @@ foreach ($products as $p) {
             transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,42,42,0.25);
         }
 
+        .section-heading {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #5b3f2f;
+            letter-spacing: 0.04em;
+        }
+
+        .modal-content {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 22px 50px rgba(59, 42, 42, 0.2);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(194,178,128,0.35);
+            background: linear-gradient(110deg, #f8f1e8 0%, #fff7ef 100%);
+        }
+
+        .modal-body {
+            background: radial-gradient(circle at top left, #fffaf3 0%, #fef9f5 55%, #f6efe4 100%);
+        }
+
+        .modal-img-main {
+            object-fit: cover;
+            width: 100%;
+            height: 220px;
+            border-radius: 0.65rem;
+        }
+
+        .gallery-thumb {
+            width: 68px;
+            height: 56px;
+            object-fit: cover;
+            border: 1px solid #d8cac0;
+            border-radius: 0.45rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gallery-thumb:hover {
+            transform: translateY(-2px);
+            border-color: #8b5e3c;
+        }
+
+        .gallery-thumb.active {
+            border-color: #8b5e3c;
+            box-shadow: 0 2px 8px rgba(139, 94, 60, 0.3);
+        }
+
         /* ═══════════════════════════════
            FOOTER
         ═══════════════════════════════ */
@@ -539,9 +590,9 @@ foreach ($products as $p) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row g-3">
+                <div class="row g-4 align-items-start">
                     <div class="col-md-5">
-                        <img id="modal-image" src="" alt="" class="img-fluid rounded" style="object-fit:cover; width:100%; height:220px;">
+                        <img id="modal-image" src="" alt="" class="img-fluid rounded" style="object-fit:cover; width:100%; height:100%; min-height:260px; border:1px solid #e6dac8;">
                     </div>
                     <div class="col-md-7">
                         <h4 id="modal-name"></h4>
@@ -555,9 +606,10 @@ foreach ($products as $p) {
                 </div>
 
                 <hr>
-                <div>
-                    <h5 class="section-heading" style="font-size:1.2rem; font-weight:700;" font-family="var(--font-serif)";><i class="bi bi-list-check"></i> Specifications</h5>
-                    <div id="modal-specs" class="row gy-2"></div>
+
+                <div class="p-3 rounded-3">
+                    <h4 class="section-heading" style="font-size:1.3rem; font-weight:600; font-family:var(--font-serif);"><i class="bi bi-list-check"></i> Specifications</h4>
+                    <div id="modal-specs" class="row gy-3"></div>
                 </div>
 
             </div>  
@@ -610,11 +662,11 @@ foreach ($products as $p) {
         }).join('');
     }
 
-    function showProductModal(product) {    
+    function showProductModal(product) {
         if (!product) return;
 
         const placeholder = 'https://via.placeholder.com/700x420?text=Mindflayer+Coffee';
-        const imageUrl = product.image && product.image.trim() ? product.image : placeholder;
+        const imageUrl = (product.image && product.image.trim()) ? product.image : placeholder;
 
         document.getElementById('productDetailModalLabel').textContent = product.name;
         document.getElementById('modal-tagline').textContent = product.tagline;
