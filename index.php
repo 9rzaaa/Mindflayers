@@ -1021,7 +1021,7 @@ $products = [
 
                 <!-- SERIAL POSITIONING: Auth + primary CTA on the right -->
                 <div class="d-flex align-items-center gap-2">
-                    <a href="#" class="nav-link" style="font-size: 0.85rem;">
+                    <a href="pages/SignupPage/login.php" class="nav-link" style="font-size: 0.85rem;">
                         Login
                     </a>
                     <a href="pages/SignupPage/signup.php" class="btn-nav-cta nav-link">
