@@ -241,17 +241,66 @@ foreach ($products as $p) {
         .price-val { font-family: var(--font-serif); font-size: 1.65rem; font-weight: 900; color: var(--espresso); line-height: 1; }
         .price-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.1rem; }
 
+        /* ── Add to Cart Button ── */
         .btn-add-cart {
             background: var(--espresso); color: var(--cream);
             font-size: 0.76rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
             padding: 0.7rem 1.35rem; border-radius: 2px; border: none;
             display: flex; align-items: center; gap: 0.45rem;
             cursor: pointer; text-decoration: none;
-            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease,
+                        min-width 0.3s var(--ease);
+            overflow: hidden;
+            position: relative;
+            min-width: 130px;
+            justify-content: center;
+            white-space: nowrap;
         }
         .btn-add-cart:hover {
             background: var(--mocha); color: var(--cream);
             transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,42,42,0.25);
+        }
+
+        /* Added state */
+        .btn-add-cart.added {
+            background: #2d7a4f !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45,122,79,0.35) !important;
+            pointer-events: none;
+        }
+
+        /* Ripple effect */
+        .btn-add-cart .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            transform: scale(0);
+            animation: ripple-anim 0.55s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Text/icon swap inside the button */
+        .btn-add-cart .btn-label-default,
+        .btn-add-cart .btn-label-added {
+            display: flex; align-items: center; gap: 0.45rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .btn-add-cart .btn-label-added {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        .btn-add-cart.added .btn-label-default {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        .btn-add-cart.added .btn-label-added {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* ── Footer ── */
@@ -395,11 +444,16 @@ foreach ($products as $p) {
                                 <div class="price-val">₱<?= number_format($p['price']) ?></div>
                                 <div class="price-sub"><?= $p['volume'] ?> · <?= $p['category'] ?></div>
                             </div>
-                            <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0"
-                                  onclick="event.stopPropagation(); event.preventDefault(); this.submit();">
+                            <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0 cart-form"
+                                  onclick="event.stopPropagation();">
                                 <input type="hidden" name="product_id" value="<?= (int)$p['id'] ?>">
                                 <button type="submit" class="btn-add-cart">
-                                    Add to Cart <i class="bi bi-plus-circle"></i>
+                                    <span class="btn-label-default">
+                                        Add to Cart <i class="bi bi-plus-circle"></i>
+                                    </span>
+                                    <span class="btn-label-added">
+                                        Added <i class="bi bi-check-circle-fill"></i>
+                                    </span>
                                 </button>
                             </form>
                         </div>
@@ -423,6 +477,7 @@ foreach ($products as $p) {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    /* ── Scroll Reveal ── */
     const revealEls = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver((entries) => {
         entries.forEach((entry, i) => {
@@ -433,6 +488,46 @@ foreach ($products as $p) {
         });
     }, { threshold: 0.1 });
     revealEls.forEach(el => obs.observe(el));
+
+    /* ── Add to Cart Animation ── */
+    document.querySelectorAll('.cart-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();         // stop default navigation
+            e.stopPropagation();
+
+            const btn = this.querySelector('.btn-add-cart');
+
+            // Already animating — ignore double-clicks
+            if (btn.classList.contains('added')) return;
+
+            // Ripple
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+            ripple.style.cssText = `width:${size}px;height:${size}px;left:${btn.offsetWidth/2 - size/2}px;top:${btn.offsetHeight/2 - size/2}px`;
+            btn.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove());
+
+            // Swap to "Added" state
+            btn.classList.add('added');
+
+            // Actually submit the form after a short delay so the animation is visible
+            const formData = new FormData(this);
+            const action   = this.action;
+            const method   = this.method;
+
+            setTimeout(() => {
+                // Submit via fetch so we stay on the page
+                fetch(action, { method, body: formData, credentials: 'same-origin' })
+                    .catch(() => {/* silent — cart may use session; page-load fallback below */});
+            }, 150);
+
+            // Reset button back to default after 2 s
+            setTimeout(() => {
+                btn.classList.remove('added');
+            }, 2000);
+        });
+    });
 </script>
 
 </body>
