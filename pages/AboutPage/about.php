@@ -53,8 +53,8 @@ $team = [
     <title>Our Story — Mindflayer Coffee</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- Tip 31: ONE typeface — Playfair Display used for everything, sized and weighted appropriately -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet"/>
+    <!-- Type system aligned with homepage: Playfair Display (display) + DM Sans (UI/body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
 
     <style>
@@ -72,8 +72,9 @@ $team = [
             --text-mid:   #6F4C3E;
             --text-muted: #9C8878;
 
-            /* Tip 31 — single typeface everywhere */
-            --font: 'Playfair Display', Georgia, serif;
+            /* Type pairing to mirror homepage */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body:    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
             /* Tip 41 — spacing system (multiples of base unit) */
             --space-xs:  0.5rem;
@@ -90,8 +91,8 @@ $team = [
         html { scroll-behavior: smooth; }
 
         body {
-            /* Tip 31: single font applied at root */
-            font-family: var(--font);
+            /* Overall feel stays serif, like a crafted story page */
+            font-family: var(--font-display);
             background: var(--linen);
             color: var(--text-dark);
             overflow-x: hidden;
@@ -129,6 +130,7 @@ $team = [
         }
 
         .t-display {
+            font-family: var(--font-display);
             font-size: clamp(3rem, 7vw, 6.5rem);
             font-weight: 900;
             line-height: 1.0;
@@ -136,6 +138,7 @@ $team = [
         }
 
         .t-h2 {
+            font-family: var(--font-display);
             font-size: clamp(2rem, 4vw, 3.2rem);
             font-weight: 700;
             line-height: 1.1;
@@ -143,6 +146,7 @@ $team = [
         }
 
         .t-h3 {
+            font-family: var(--font-display);
             font-size: 1.35rem;
             font-weight: 700;
             line-height: 1.25;
@@ -150,6 +154,8 @@ $team = [
         }
 
         .t-body-lg {
+            /* Smaller narrative blocks use the same sans-serif feel as product descriptions */
+            font-family: var(--font-body);
             font-size: 1.1rem;
             font-weight: 400;
             font-style: italic;
@@ -157,12 +163,14 @@ $team = [
         }
 
         .t-body {
+            font-family: var(--font-body);
             font-size: 0.95rem;
             font-weight: 400;
             line-height: 1.85;
         }
 
         .t-small {
+            font-family: var(--font-body);
             font-size: 0.78rem;
             font-weight: 400;
             letter-spacing: 0.04em;
@@ -178,34 +186,56 @@ $team = [
            NAVBAR
         ══════════════════════════════════════ */
         .navbar {
-            background: var(--espresso);
-            padding: 1rem 2.5rem;
-            border-bottom: 1px solid rgba(194,178,128,0.15);
-            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--espresso);
+            padding: 1.1rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
         }
         .navbar-brand {
-            font-size: 1.5rem; font-weight: 900;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.55rem;
+            font-weight: 900;
             color: var(--cream) !important;
             letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .navbar-brand .dot { color: var(--sand); }
 
-        .nav-link-item {
-            font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
-            font-weight: 400; color: rgba(232,216,176,0.6) !important;
-            text-decoration: none; padding: 0.25rem 0.9rem !important;
-            transition: color 0.25s ease;
+        .navbar-nav .nav-link {
+            font-family: 'DM Sans', sans-serif;
+            color: rgba(232, 216, 176, 0.75) !important;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.25rem 1rem !important;
+            transition: color var(--ease);
         }
-        .nav-link-item:hover { color: var(--cream) !important; }
-        .nav-link-item.active { color: var(--sand) !important; }
+        .navbar-nav .nav-link:hover {
+            color: var(--cream) !important;
+        }
 
-        .btn-nav {
-            font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-            font-weight: 500; background: var(--sand); color: var(--espresso) !important;
-            padding: 0.45rem 1.3rem; border-radius: 2px; text-decoration: none;
-            transition: background 0.25s ease, transform 0.25s ease;
+        .btn-nav-cta {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--sand);
+            color: var(--espresso) !important;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.4rem !important;
+            border-radius: 2px;
+            border: none;
+            transition: background var(--ease), transform var(--ease);
         }
-        .btn-nav:hover { background: var(--cream); transform: translateY(-1px); }
+        .btn-nav-cta:hover {
+            background-color: var(--cream);
+            transform: translateY(-1px);
+        }
 
         /* ══════════════════════════════════════
            HERO
@@ -505,24 +535,39 @@ $team = [
 <body>
 
 <!-- ════════════════════════════════════
-     NAVBAR
+     NAVBAR — match homepage
 ════════════════════════════════════ -->
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand" href="../../index.php">☕ Mindflayer<span class="dot">.</span></a>
 
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navAbout">
-            <i class="bi bi-list text-warning fs-4"></i>
+        <!-- PRIMARY: Brand — leftmost, high recall -->
+        <a class="navbar-brand" href="../../index.php">
+            ☕ Mindflayer<span class="dot">.</span>
+        </a>
+
+        <button class="border-0 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+            <i class="text-warning bi bi-list fs-4"></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navAbout">
-            <ul class="navbar-nav mx-auto gap-1">
-                <li class="nav-item"><a class="nav-link-item" href="../../index.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link-item active" href="about.php">Our Story</a></li>
-                <li class="nav-item"><a class="nav-link-item" href="../ProductListPage/products.php">Menu</a></li>
-                <li class="nav-item"><a class="nav-link-item" href="#">Locations</a></li>
+        <div class="collapse navbar-collapse" id="navMain">
+            <!-- Center nav items -->
+            <ul class="gap-1 mx-auto navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="../../index.php#menu">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.php">Our Story</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../index.php#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../index.php#contact">Locations</a></li>
+                <li class="nav-item"><a class="nav-link" href="../ProfilePage/profile.php">Profile</a></li>
             </ul>
-            <a href="ProductListPage/products.php" class="btn-nav">Order Now <i class="bi bi-arrow-right ms-1"></i></a>
+
+            <!-- Auth + primary CTA on the right -->
+            <div class="d-flex align-items-center gap-2">
+                <a href="../SignupPage/login.php" class="nav-link" style="font-size: 0.85rem;">
+                    Login
+                </a>
+                <a href="../SignupPage/signup.php" class="btn-nav-cta nav-link">
+                    Sign Up <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
