@@ -3,6 +3,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,20 +18,24 @@
 
     <style>
         :root {
-            --espresso:   #3B2A2A;
-            --mocha:      #6F4C3E;
-            --sand:       #C2B280;
-            --cream:      #E8D8B0;
-            --linen:      #F5F5F0;
-            --white:      #FFFFFF;
-            --text-dark:  #2A1E1E;
+            --espresso: #3B2A2A;
+            --mocha: #6F4C3E;
+            --sand: #C2B280;
+            --cream: #E8D8B0;
+            --linen: #F5F5F0;
+            --white: #FFFFFF;
+            --text-dark: #2A1E1E;
             --text-light: #9C8878;
             --font-display: 'Playfair Display', Georgia, serif;
-            --font-body:    'DM Sans', sans-serif;
-            --transition:   0.3s ease;
+            --font-body: 'DM Sans', sans-serif;
+            --transition: 0.3s ease;
         }
 
-        *, *::before, *::after { box-sizing: border-box; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -50,15 +55,15 @@
             background: rgba(26, 18, 18, 0.96);
             border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 24px 70px rgba(0,0,0,0.7);
-            border: 1px solid rgba(194,178,128,0.25);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(194, 178, 128, 0.25);
         }
 
         .auth-hero {
             flex: 0 0 50%;
             padding: 2.5rem 2.75rem;
             background:
-                radial-gradient(circle at top left, rgba(194,178,128,0.2), transparent 60%),
+                radial-gradient(circle at top left, rgba(194, 178, 128, 0.2), transparent 60%),
                 linear-gradient(145deg, #3B2A2A 0%, #1C1412 40%, #000000 100%);
             position: relative;
             color: var(--linen);
@@ -83,7 +88,10 @@
             text-decoration: none;
             letter-spacing: -0.03em;
         }
-        .brand-link .dot { color: var(--sand); }
+
+        .brand-link .dot {
+            color: var(--sand);
+        }
 
         .hero-heading {
             position: relative;
@@ -95,6 +103,7 @@
             line-height: 1.05;
             letter-spacing: -0.03em;
         }
+
         .hero-heading em {
             font-style: italic;
             color: var(--sand);
@@ -105,7 +114,7 @@
             z-index: 1;
             margin-top: 1.2rem;
             font-size: 0.98rem;
-            color: rgba(245,245,240,0.75);
+            color: rgba(245, 245, 240, 0.75);
             max-width: 320px;
         }
 
@@ -116,7 +125,7 @@
             font-size: 0.8rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: rgba(245,245,240,0.55);
+            color: rgba(245, 245, 240, 0.55);
         }
 
         .auth-card {
@@ -136,7 +145,7 @@
 
         .auth-subtitle {
             font-size: 0.92rem;
-            color: rgba(42,46,67,0.7);
+            color: rgba(42, 46, 67, 0.7);
             margin-top: 0.5rem;
             margin-bottom: 1.4rem;
         }
@@ -144,7 +153,7 @@
         .social-login-btn {
             width: 100%;
             border-radius: 999px;
-            border: 1px solid rgba(194,178,128,0.6);
+            border: 1px solid rgba(194, 178, 128, 0.6);
             background-color: #FFFFFF;
             color: var(--espresso);
             font-size: 0.9rem;
@@ -156,12 +165,14 @@
             margin-bottom: 0.55rem;
             transition: background-color var(--transition), transform 0.15s ease, box-shadow 0.15s ease;
         }
+
         .social-login-btn i {
             font-size: 1rem;
         }
+
         .social-login-btn:hover {
             background-color: var(--cream);
-            box-shadow: 0 8px 22px rgba(59,42,42,0.18);
+            box-shadow: 0 8px 22px rgba(59, 42, 42, 0.18);
             transform: translateY(-1px);
         }
 
@@ -175,32 +186,34 @@
             text-transform: uppercase;
             color: var(--text-light);
         }
+
         .divider span {
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(194,178,128,0.7), transparent);
+            background: linear-gradient(90deg, transparent, rgba(194, 178, 128, 0.7), transparent);
         }
 
         .form-label {
             font-size: 0.8rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: rgba(42,46,67,0.75);
+            color: rgba(42, 46, 67, 0.75);
             margin-bottom: 0.35rem;
         }
 
         .form-control {
             background-color: #FFFFFF;
             border-radius: 999px;
-            border: 1px solid rgba(194,178,128,0.65);
+            border: 1px solid rgba(194, 178, 128, 0.65);
             padding: 0.65rem 0.95rem;
             font-size: 0.9rem;
             color: var(--espresso);
         }
+
         .form-control:focus {
             outline: none;
-            box-shadow: 0 0 0 1px rgba(194,178,128,0.55);
-            border-color: rgba(194,178,128,0.95);
+            box-shadow: 0 0 0 1px rgba(194, 178, 128, 0.55);
+            border-color: rgba(194, 178, 128, 0.95);
             background-color: #FFFFFF;
         }
 
@@ -221,9 +234,10 @@
             gap: 0.5rem;
             transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
         }
+
         .primary-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 32px rgba(59,42,42,0.45);
+            box-shadow: 0 12px 32px rgba(59, 42, 42, 0.45);
             filter: brightness(1.02);
         }
 
@@ -231,7 +245,7 @@
             width: 100%;
             margin-top: 0.75rem;
             border-radius: 999px;
-            border: 1px solid rgba(194,178,128,0.8);
+            border: 1px solid rgba(194, 178, 128, 0.8);
             background-color: transparent;
             color: var(--mocha);
             font-size: 0.9rem;
@@ -246,8 +260,9 @@
             text-decoration: none;
             transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
         }
+
         .secondary-btn:hover {
-            background-color: rgba(232,216,176,0.2);
+            background-color: rgba(232, 216, 176, 0.2);
             transform: translateY(-1px);
         }
 
@@ -262,15 +277,16 @@
             align-items: center;
             gap: 0.35rem;
             font-size: 0.85rem;
-            color: rgba(245,245,240,0.9);
+            color: rgba(245, 245, 240, 0.9);
             text-decoration: none;
             margin-top: 1.4rem;
             padding: 0.45rem 0.9rem;
             border-radius: 999px;
-            border: 1px solid rgba(232,216,176,0.7);
-            background-color: rgba(14,9,8,0.4);
+            border: 1px solid rgba(232, 216, 176, 0.7);
+            background-color: rgba(14, 9, 8, 0.4);
             transition: background-color var(--transition), border-color var(--transition), transform 0.15s ease;
         }
+
         .back-link:hover {
             color: var(--espresso);
             background-color: var(--cream);
@@ -282,6 +298,7 @@
             body {
                 background: #0E0908;
             }
+
             .auth-page {
                 margin: 0;
                 max-width: 100%;
@@ -289,9 +306,11 @@
                 box-shadow: none;
                 border: none;
             }
+
             .auth-hero {
                 display: none;
             }
+
             .auth-card {
                 flex: 1 1 auto;
                 padding: 2.25rem 1.5rem 2.5rem;
@@ -299,105 +318,116 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="auth-page d-flex">
-    <div class="auth-hero d-none d-lg-flex flex-column justify-content-between">
-        <div>
-            <a href="../../index.php" class="brand-link">
-                ☕ Mindflayer<span class="dot">.</span>
-            </a>
-            <h1 class="hero-heading">
-                Welcome back,<br>
-                <em>favourite</em> regular.
-            </h1>
-            <p class="hero-text">
-                Pick up where you left off — saved orders, earned perks, and your go-to cup in just a few taps.
+    <div class="d-flex auth-page">
+        <div class="d-lg-flex flex-column justify-content-between auth-hero d-none">
+            <div>
+                <a href="../../index.php" class="brand-link">
+                    ☕ Mindflayer<span class="dot">.</span>
+                </a>
+                <h1 class="hero-heading">
+                    Welcome back,<br>
+                    <em>favourite</em> regular.
+                </h1>
+                <p class="hero-text">
+                    Pick up where you left off — saved orders, earned perks, and your go-to cup in just a few taps.
+                </p>
+            </div>
+            <p class="hero-note">
+                Members-only perks · Faster checkout · Order history
             </p>
         </div>
-        <p class="hero-note">
-            Members-only perks · Faster checkout · Order history
-        </p>
-    </div>
 
-    <div class="auth-card d-flex flex-column justify-content-between">
-        <div>
-            <h2 class="auth-title">Log in</h2>
-            <p class="auth-subtitle">Jump back into your account or continue with social.</p>
+        <div class="d-flex flex-column justify-content-between auth-card">
+            <div>
+                <h2 class="auth-title">Log in</h2>
+                <p class="auth-subtitle">Jump back into your account or continue with social.</p>
 
-            <!-- Social login first (Tip 16) -->
-            <button type="button" class="social-login-btn">
-                <i class="bi bi-google"></i>
-                Continue with Google
-            </button>
-            <button type="button" class="social-login-btn">
-                <i class="bi bi-facebook"></i>
-                Continue with Facebook
-            </button>
+                <!-- Social login first (Tip 16) -->
+                <button type="button" class="social-login-btn">
+                    <i class="bi bi-google"></i>
+                    Continue with Google
+                </button>
+                <button type="button" class="social-login-btn">
+                    <i class="bi bi-facebook"></i>
+                    Continue with Facebook
+                </button>
 
-            <div class="divider">
-                <span></span>
-                <div>or log in with email</div>
-                <span></span>
+                <div class="divider">
+                    <span></span>
+                    <div>or log in with email</div>
+                    <span></span>
+                </div>
+
+                <form id="login-form" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Your password" required>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between helper-row">
+                        <div class="mb-0 form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="remember">
+                            <label class="form-check-label" for="remember">
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#" style="font-size: 0.8rem; text-decoration: none; color: #273ED3;">Forgot password?</a>
+                    </div>
+
+                    <!-- Primary vs secondary button hierarchy (Tip 30) -->
+                    <button type="submit" class="mt-3 primary-btn">
+                        Log in
+                    </button>
+                    <a href="signup.php" class="secondary-btn">
+                        <span>Sign up</span>
+                    </a>
+                </form>
             </div>
 
-            <form id="login-form" novalidate>
-                <div class="mb-3">
-                    <label class="form-label" for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Your password" required>
-                </div>
-                <div class="d-flex justify-content-between align-items-center helper-row">
-                    <div class="form-check mb-0">
-                        <input class="form-check-input" type="checkbox" value="" id="remember">
-                        <label class="form-check-label" for="remember">
-                            Remember me
-                        </label>
-                    </div>
-                    <a href="#" style="font-size: 0.8rem; text-decoration: none; color: #273ED3;">Forgot password?</a>
-                </div>
-
-                <!-- Primary vs secondary button hierarchy (Tip 30) -->
-                <button type="submit" class="primary-btn mt-3">
-                    Log in
-                </button>
-                <a href="signup.php" class="secondary-btn">
-                    <span>Sign up</span>
+            <div class="mt-3">
+                <a href="../../index.php" class="back-link">
+                    <i class="bi-arrow-left bi"></i>
+                    Back to home
                 </a>
-            </form>
-        </div>
-
-        <div class="mt-3">
-            <a href="../../index.php" class="back-link">
-                <i class="bi bi-arrow-left"></i>
-                Back to home
-            </a>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    const loginForm = document.getElementById('login-form');
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Auth JS -->
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        const loginForm = document.getElementById('login-form');
 
-    loginForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
 
-        if (!email || !password) {
-            alert('Please enter your email and password.');
-            return;
-        }
+            if (!email || !password) {
+                alert('Please enter your email and password.');
+                return;
+            }
 
-        alert('Login submitted (demo only – no real authentication).');
-    });
-</script>
+            // Set user as logged in
+            setLoggedIn(email);
+
+            alert('Login successful! Redirecting to home page...');
+
+            // Redirect to home page
+            setTimeout(() => {
+                window.location.href = '../../index.php';
+            }, 500);
+        });
+    </script>
 </body>
-</html>
 
+</html>

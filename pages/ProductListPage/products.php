@@ -10,7 +10,7 @@ $filtered = $active_cat === 'All'
 
 $search = isset($_GET['q']) ? trim($_GET['q']) : '';
 if ($search !== '') {
-    $filtered = array_values(array_filter($filtered, function($p) use ($search) {
+    $filtered = array_values(array_filter($filtered, function ($p) use ($search) {
         return stripos($p['name'], $search) !== false;
     }));
 }
@@ -22,44 +22,67 @@ foreach ($products as $p) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Menu — Mindflayer Coffee</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
 
     <style>
         :root {
-            --espresso:   #3B2A2A;
-            --mocha:      #6F4C3E;
-            --sand:       #C2B280;
-            --cream:      #E8D8B0;
-            --linen:      #F5F5F0;
-            --text-dark:  #2A1E1E;
-            --text-mid:   #6F4C3E;
+            --espresso: #3B2A2A;
+            --mocha: #6F4C3E;
+            --sand: #C2B280;
+            --cream: #E8D8B0;
+            --linen: #F5F5F0;
+            --text-dark: #2A1E1E;
+            --text-mid: #6F4C3E;
             --text-muted: #9C8878;
             --font-serif: 'Playfair Display', Georgia, serif;
-            --font-sans:  'DM Sans', sans-serif;
-            --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-sans: 'DM Sans', sans-serif;
+            --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        *, *::before, *::after { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: var(--font-sans);
             background: var(--linen);
             color: var(--text-dark);
             overflow-x: hidden;
         }
-        h1,h2,h3,h4 { font-family: var(--font-serif); }
-        a { text-decoration: none; }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-serif);
+        }
+
+        a {
+            text-decoration: none;
+        }
 
         /* Noise texture */
         body::before {
-            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.4;
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
         }
 
@@ -67,71 +90,129 @@ foreach ($products as $p) {
         .navbar {
             background: var(--espresso);
             padding: 1.1rem 2.5rem;
-            border-bottom: 1px solid rgba(194,178,128,0.2);
-            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
+
         .navbar-brand {
             font-family: var(--font-serif);
-            font-size: 1.55rem; font-weight: 900;
+            font-size: 1.55rem;
+            font-weight: 900;
             color: var(--cream) !important;
-            display: flex; align-items: center; gap: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
             letter-spacing: -0.02em;
         }
-        .navbar-brand .dot { color: var(--sand); }
+
+        .navbar-brand .dot {
+            color: var(--sand);
+        }
+
         .navbar-nav .nav-link {
-            color: rgba(232,216,176,0.75) !important;
-            font-size: 0.88rem; font-weight: 400;
-            letter-spacing: 0.08em; text-transform: uppercase;
+            color: rgba(232, 216, 176, 0.75) !important;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             padding: 0.25rem 1rem !important;
             transition: color var(--ease);
         }
+
         .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active { color: var(--cream) !important; }
+        .navbar-nav .nav-link.active {
+            color: var(--cream) !important;
+        }
+
         .btn-nav-cta {
             background: linear-gradient(135deg, var(--sand), var(--cream));
             color: var(--espresso) !important;
-            font-size: 0.82rem; font-weight: 600;
-            letter-spacing: 0.12em; text-transform: uppercase;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             padding: 0.6rem 1.7rem !important;
-            border-radius: 2px; border: none;
-            box-shadow: 0 10px 26px rgba(194,178,128,0.28);
+            border-radius: 2px;
+            border: none;
+            box-shadow: 0 10px 26px rgba(194, 178, 128, 0.28);
             transition: transform var(--ease), box-shadow var(--ease);
         }
+
         .btn-nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 34px rgba(194,178,128,0.45);
+            box-shadow: 0 14px 34px rgba(194, 178, 128, 0.45);
         }
-        @media (max-width: 991.98px) { .navbar { padding: 0.9rem 1.5rem; } }
+
+        @media (max-width: 991.98px) {
+            .navbar {
+                padding: 0.9rem 1.5rem;
+            }
+        }
 
         /* ── Page Header ── */
         .page-header {
             background: var(--espresso);
             padding: 4.5rem 2.5rem 3.5rem;
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
         }
+
         .page-header::after {
             content: 'MENU';
-            position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
-            font-family: var(--font-serif); font-size: 14rem; font-weight: 900;
-            color: rgba(194,178,128,0.05); letter-spacing: -0.05em;
-            pointer-events: none; white-space: nowrap;
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-serif);
+            font-size: 14rem;
+            font-weight: 900;
+            color: rgba(194, 178, 128, 0.05);
+            letter-spacing: -0.05em;
+            pointer-events: none;
+            white-space: nowrap;
         }
+
         .page-eyebrow {
-            font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
-            color: var(--sand); margin-bottom: 0.8rem;
-            display: flex; align-items: center; gap: 0.75rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--sand);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
+
         .page-eyebrow::before {
-            content: ''; display: inline-block; width: 28px; height: 1px; background: var(--sand);
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--sand);
         }
+
         .page-title {
-            font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900;
-            color: var(--linen); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1rem;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--linen);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
         }
-        .page-title em { font-style: italic; color: var(--sand); }
+
+        .page-title em {
+            font-style: italic;
+            color: var(--sand);
+        }
+
         .page-desc {
-            font-size: 1rem; font-weight: 300;
-            color: rgba(245,245,240,0.55); max-width: 480px; line-height: 1.7;
+            font-size: 1rem;
+            font-weight: 300;
+            color: rgba(245, 245, 240, 0.55);
+            max-width: 480px;
+            line-height: 1.7;
         }
 
         /* ── Filter Bar ── */
@@ -139,126 +220,285 @@ foreach ($products as $p) {
             background: #fff;
             border-bottom: 1px solid var(--cream);
             padding: 0 2.5rem;
-            position: sticky; top: 66px; z-index: 900;
+            position: sticky;
+            top: 66px;
+            z-index: 900;
         }
-        .filter-tabs { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
-        .filter-tabs::-webkit-scrollbar { display: none; }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
         .filter-tab {
             padding: 1rem 1.5rem;
-            font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-            font-weight: 500; white-space: nowrap; color: var(--text-muted);
-            text-decoration: none; border-bottom: 2px solid transparent;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            white-space: nowrap;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
             transition: color 0.25s ease, border-color 0.25s ease;
-            display: flex; align-items: center; gap: 0.45rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
         }
-        .filter-tab:hover { color: var(--mocha); }
-        .filter-tab.active { color: var(--espresso); border-bottom-color: var(--mocha); }
+
+        .filter-tab:hover {
+            color: var(--mocha);
+        }
+
+        .filter-tab.active {
+            color: var(--espresso);
+            border-bottom-color: var(--mocha);
+        }
+
         .count-pill {
-            background: var(--cream); color: var(--mocha);
-            font-size: 0.67rem; font-weight: 600;
-            padding: 0.1rem 0.5rem; border-radius: 20px;
+            background: var(--cream);
+            color: var(--mocha);
+            font-size: 0.67rem;
+            font-weight: 600;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
         }
-        .filter-tab.active .count-pill { background: var(--mocha); color: var(--linen); }
+
+        .filter-tab.active .count-pill {
+            background: var(--mocha);
+            color: var(--linen);
+        }
 
         /* ── Products Section ── */
-        .products-section { padding: 2.5rem; }
+        .products-section {
+            padding: 2.5rem;
+        }
+
         .results-bar {
-            display: flex; justify-content: space-between;
-            align-items: center; gap: 1.5rem; padding-bottom: 1.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            padding-bottom: 1.75rem;
         }
+
         .results-count {
-            font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
         }
-        .results-count strong { color: var(--mocha); font-weight: 600; }
-        .search-form { flex: 1; max-width: 420px; }
+
+        .results-count strong {
+            color: var(--mocha);
+            font-weight: 600;
+        }
+
+        .search-form {
+            flex: 1;
+            max-width: 420px;
+        }
+
         .search-input {
-            border-radius: 999px; border: 1px solid var(--cream);
-            padding: 0.65rem 1.1rem; font-size: 0.9rem; background-color: #fff;
+            border-radius: 999px;
+            border: 1px solid var(--cream);
+            padding: 0.65rem 1.1rem;
+            font-size: 0.9rem;
+            background-color: #fff;
         }
-        .search-input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
 
         /* ── Product Card ── */
         .product-card {
             background: #fff;
-            border: 1px solid rgba(194,178,128,0.22);
-            border-radius: 6px; overflow: hidden;
-            height: 100%; display: flex; flex-direction: column;
+            border: 1px solid rgba(194, 178, 128, 0.22);
+            border-radius: 6px;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
-            text-decoration: none; color: inherit;
+            text-decoration: none;
+            color: inherit;
         }
+
         .product-card:hover {
             transform: translateY(-7px);
-            box-shadow: 0 24px 64px rgba(59,42,42,0.13);
-            border-color: rgba(194,178,128,0.55);
+            box-shadow: 0 24px 64px rgba(59, 42, 42, 0.13);
+            border-color: rgba(194, 178, 128, 0.55);
             color: inherit;
         }
 
         /* Image */
         .card-img-wrap {
-            position: relative; width: 100%; padding-top: 66%;
-            background: var(--cream); overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding-top: 66%;
+            background: var(--cream);
+            overflow: hidden;
         }
+
         .card-img-wrap img {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            object-fit: cover; transition: transform 0.5s var(--ease);
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s var(--ease);
         }
-        .product-card:hover .card-img-wrap img { transform: scale(1.06); }
+
+        .product-card:hover .card-img-wrap img {
+            transform: scale(1.06);
+        }
+
         .img-ph {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
             background: linear-gradient(145deg, var(--cream) 0%, #d6c59a 100%);
         }
-        .img-ph-emoji { font-size: 5rem; line-height: 1; }
-        .img-ph-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mocha); opacity: 0.5; }
-        .card-badge {
-            position: absolute; top: 14px; left: 14px;
-            font-size: 0.63rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-            padding: 0.3rem 0.8rem; border-radius: 20px;
-            background: var(--espresso); color: var(--cream); z-index: 2;
+
+        .img-ph-emoji {
+            font-size: 5rem;
+            line-height: 1;
         }
+
+        .img-ph-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mocha);
+            opacity: 0.5;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            font-size: 0.63rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: var(--espresso);
+            color: var(--cream);
+            z-index: 2;
+        }
+
         .card-cat-pill {
-            position: absolute; top: 14px; right: 14px;
-            font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-            padding: 0.25rem 0.7rem; border-radius: 20px;
-            background: rgba(245,245,240,0.9); color: var(--mocha); z-index: 2;
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            background: rgba(245, 245, 240, 0.9);
+            color: var(--mocha);
+            z-index: 2;
             backdrop-filter: blur(4px);
         }
 
         /* Card body */
-        .c-body { padding: 1.75rem 1.75rem 0; flex: 1; }
-        .c-name { font-size: 1.3rem; font-weight: 700; color: var(--espresso); line-height: 1.2; margin-bottom: 0.3rem; }
-        .c-tagline { font-size: 0.84rem; font-style: italic; color: var(--text-muted); line-height: 1.5; }
+        .c-body {
+            padding: 1.75rem 1.75rem 0;
+            flex: 1;
+        }
+
+        .c-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--espresso);
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .c-tagline {
+            font-size: 0.84rem;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
 
         /* Card footer */
         .c-footer {
             padding: 1.4rem 1.75rem;
             margin-top: 1.25rem;
             border-top: 1px solid var(--cream);
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: #fff;
         }
-        .price-lbl { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.1rem; }
-        .price-val { font-family: var(--font-serif); font-size: 1.65rem; font-weight: 900; color: var(--espresso); line-height: 1; }
-        .price-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+        .price-lbl {
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.1rem;
+        }
+
+        .price-val {
+            font-family: var(--font-serif);
+            font-size: 1.65rem;
+            font-weight: 900;
+            color: var(--espresso);
+            line-height: 1;
+        }
+
+        .price-sub {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
 
         /* ── Add to Cart Button ── */
         .btn-add-cart {
-            background: var(--espresso); color: var(--cream);
-            font-size: 0.76rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-            padding: 0.7rem 1.35rem; border-radius: 2px; border: none;
-            display: flex; align-items: center; gap: 0.45rem;
-            cursor: pointer; text-decoration: none;
+            background: var(--espresso);
+            color: var(--cream);
+            font-size: 0.76rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.7rem 1.35rem;
+            border-radius: 2px;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            cursor: pointer;
+            text-decoration: none;
             transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease,
-                        min-width 0.3s var(--ease);
+                min-width 0.3s var(--ease);
             overflow: hidden;
             position: relative;
             min-width: 130px;
             justify-content: center;
             white-space: nowrap;
         }
+
         .btn-add-cart:hover {
-            background: var(--mocha); color: var(--cream);
-            transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,42,42,0.25);
+            background: var(--mocha);
+            color: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 42, 42, 0.25);
         }
 
         /* Added state */
@@ -266,7 +506,7 @@ foreach ($products as $p) {
             background: #2d7a4f !important;
             color: #fff !important;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(45,122,79,0.35) !important;
+            box-shadow: 0 6px 20px rgba(45, 122, 79, 0.35) !important;
             pointer-events: none;
         }
 
@@ -274,30 +514,39 @@ foreach ($products as $p) {
         .btn-add-cart .ripple {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255,255,255,0.35);
+            background: rgba(255, 255, 255, 0.35);
             transform: scale(0);
             animation: ripple-anim 0.55s linear;
             pointer-events: none;
         }
+
         @keyframes ripple-anim {
-            to { transform: scale(4); opacity: 0; }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         /* Text/icon swap inside the button */
         .btn-add-cart .btn-label-default,
         .btn-add-cart .btn-label-added {
-            display: flex; align-items: center; gap: 0.45rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
+
         .btn-add-cart .btn-label-added {
             position: absolute;
             opacity: 0;
             transform: translateY(8px);
         }
+
         .btn-add-cart.added .btn-label-default {
             opacity: 0;
             transform: translateY(-8px);
         }
+
         .btn-add-cart.added .btn-label-added {
             opacity: 1;
             transform: translateY(0);
@@ -306,229 +555,283 @@ foreach ($products as $p) {
         /* ── Footer ── */
         .page-footer {
             background: var(--espresso);
-            border-top: 1px solid rgba(194,178,128,0.12);
+            border-top: 1px solid rgba(194, 178, 128, 0.12);
             padding: 1.5rem 2.5rem;
         }
-        .footer-brand { font-family: var(--font-serif); font-size: 0.9rem; font-weight: 700; color: rgba(245,245,240,0.5); }
-        .footer-brand span { color: var(--sand); }
-        .footer-txt { font-size: 0.75rem; color: rgba(245,245,240,0.3); }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: rgba(245, 245, 240, 0.5);
+        }
+
+        .footer-brand span {
+            color: var(--sand);
+        }
+
+        .footer-txt {
+            font-size: 0.75rem;
+            color: rgba(245, 245, 240, 0.3);
+        }
 
         /* ── Scroll Reveal ── */
-        .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         @media (max-width: 767px) {
-            .products-section { padding: 1.5rem; }
-            .page-header { padding: 3rem 1.5rem 2.5rem; }
-            .filter-bar { padding: 0 1rem; }
-            .results-bar { flex-direction: column; align-items: flex-start; }
-            .c-body, .c-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+            .products-section {
+                padding: 1.5rem;
+            }
+
+            .page-header {
+                padding: 3rem 1.5rem 2.5rem;
+            }
+
+            .filter-bar {
+                padding: 0 1rem;
+            }
+
+            .results-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .c-body,
+            .c-footer {
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<!-- ── Navbar ── -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="../../index.php">☕ Mindflayer<span class="dot">.</span></a>
-        <button class="border-0 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMainMenu">
-            <i class="text-warning bi bi-list fs-4"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navMainMenu">
-            <ul class="gap-1 mx-auto navbar-nav">
-                <li class="nav-item"><a class="nav-link active" href="./products.php">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="../AboutPage/about.php">Our Story</a></li>
-                <li class="nav-item"><a class="nav-link" href="../../index.php#experience">Experience</a></li>
-                <li class="nav-item"><a class="nav-link" href="../../index.php#contact">Locations</a></li>
-                <li class="nav-item"><a class="nav-link" href="../ProfilePage/profile.php">Profile</a></li>
-            </ul>
-            <div class="d-flex align-items-center gap-2">
-                <a href="../ShoppingCartPage/shoppingcart.php" class="btn-nav-cta nav-link">
-                    Shopping Cart <i class="bi bi-bag ms-1"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<!-- ── Page Header ── -->
-<header class="page-header">
-    <div class="container">
-        <p class="page-eyebrow">Handcrafted Drinks</p>
-        <h1 class="page-title">Our <em>Signature</em> Menu.</h1>
-        <p class="page-desc">Every drink is made to order with real ingredients, ethically sourced beans, and a little extra care.</p>
-    </div>
-</header>
-
-<!-- ── Filter Bar ── -->
-<div class="filter-bar">
-    <div class="container">
-        <div class="filter-tabs">
-            <?php
-            $tab_icons = [
-                'All'          => 'bi-grid-fill',
-                'Espresso'     => 'bi-cup-hot',
-                'Non-Espresso' => 'bi-cup-straw',
-                'Cold Brew'    => 'bi-snow',
-            ];
-            foreach ($categories as $cat):
-                $is_active = $active_cat === $cat;
-                $cnt = $cat === 'All' ? count($products) : ($cat_counts[$cat] ?? 0);
-            ?>
-            <a href="?cat=<?= urlencode($cat) ?>" class="filter-tab <?= $is_active ? 'active' : '' ?>">
-                <i class="<?= $tab_icons[$cat] ?? 'bi-dot' ?>"></i>
-                <?= htmlspecialchars($cat) ?>
-                <span class="count-pill"><?= $cnt ?></span>
-            </a>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
-
-<!-- ── Products ── -->
-<main>
-    <section class="products-section">
-        <div class="container">
-
-            <div class="results-bar">
-                <form method="get" class="search-form">
-                    <?php if ($active_cat !== 'All'): ?>
-                        <input type="hidden" name="cat" value="<?= htmlspecialchars($active_cat) ?>">
-                    <?php endif; ?>
-                    <input
-                        type="search" name="q"
-                        value="<?= htmlspecialchars($search) ?>"
-                        class="form-control search-input"
-                        placeholder="Search for coffee, lattes, and more"
-                        aria-label="Search drinks"
-                    >
-                </form>
-                <p class="results-count mb-0">
-                    Showing <strong><?= count($filtered) ?></strong>
-                    drink<?= count($filtered) !== 1 ? 's' : '' ?>
-                    <?= $active_cat !== 'All' ? '&nbsp;· <strong>' . htmlspecialchars($active_cat) . '</strong>' : '' ?>
-                </p>
-            </div>
-
-            <div class="row g-4">
-                <?php foreach ($filtered as $i => $p): ?>
-                <div class="col-md-6 col-xl-4 reveal" style="transition-delay:<?= $i * 0.08 ?>s">
-
-                    <a href="../ProductDetailsPage/productdetails.php?id=<?= (int)$p['id'] ?>" class="product-card">
-
-                        <!-- Image -->
-                        <div class="card-img-wrap">
-                            <?php if (file_exists(__DIR__ . '/' . $p['image'])): ?>
-                                <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy"/>
-                            <?php else: ?>
-                                <div class="img-ph">
-                                    <span class="img-ph-emoji"><?= $p['emoji'] ?></span>
-                                    <span class="img-ph-label"><?= htmlspecialchars($p['name']) ?></span>
-                                </div>
-                            <?php endif; ?>
-                            <span class="card-badge"><?= htmlspecialchars($p['badge']) ?></span>
-                            <span class="card-cat-pill"><?= htmlspecialchars($p['category']) ?></span>
-                        </div>
-
-                        <!-- Name + tagline -->
-                        <div class="c-body">
-                            <h2 class="c-name"><?= htmlspecialchars($p['name']) ?></h2>
-                            <p class="c-tagline"><?= htmlspecialchars($p['tagline']) ?></p>
-                        </div>
-
-                        <!-- Price + CTA -->
-                        <div class="c-footer">
-                            <div>
-                                <div class="price-lbl">Starting at</div>
-                                <div class="price-val">₱<?= number_format($p['price']) ?></div>
-                                <div class="price-sub"><?= $p['volume'] ?> · <?= $p['category'] ?></div>
-                            </div>
-                            <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0 cart-form"
-                                  onclick="event.stopPropagation();">
-                                <input type="hidden" name="product_id" value="<?= (int)$p['id'] ?>">
-                                <button type="submit" class="btn-add-cart">
-                                    <span class="btn-label-default">
-                                        Add to Cart <i class="bi bi-plus-circle"></i>
-                                    </span>
-                                    <span class="btn-label-added">
-                                        Added <i class="bi bi-check-circle-fill"></i>
-                                    </span>
-                                </button>
-                            </form>
-                        </div>
-
+    <!-- ── Navbar ── -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../../index.php">☕ Mindflayer<span class="dot">.</span></a>
+            <button class="border-0 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMainMenu">
+                <i class="text-warning bi bi-list fs-4"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navMainMenu">
+                <ul class="gap-1 mx-auto navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="./products.php">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../AboutPage/about.php">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#contact">Locations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../ProfilePage/profile.php">Profile</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="../ShoppingCartPage/shoppingcart.php" class="btn-nav-cta nav-link">
+                        Shopping Cart <i class="ms-1 bi bi-bag"></i>
                     </a>
                 </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── Page Header ── -->
+    <header class="page-header">
+        <div class="container">
+            <p class="page-eyebrow">Handcrafted Drinks</p>
+            <h1 class="page-title">Our <em>Signature</em> Menu.</h1>
+            <p class="page-desc">Every drink is made to order with real ingredients, ethically sourced beans, and a little extra care.</p>
+        </div>
+    </header>
+
+    <!-- ── Filter Bar ── -->
+    <div class="filter-bar">
+        <div class="container">
+            <div class="filter-tabs">
+                <?php
+                $tab_icons = [
+                    'All'          => 'bi-grid-fill',
+                    'Espresso'     => 'bi-cup-hot',
+                    'Non-Espresso' => 'bi-cup-straw',
+                    'Cold Brew'    => 'bi-snow',
+                ];
+                foreach ($categories as $cat):
+                    $is_active = $active_cat === $cat;
+                    $cnt = $cat === 'All' ? count($products) : ($cat_counts[$cat] ?? 0);
+                ?>
+                    <a href="?cat=<?= urlencode($cat) ?>" class="filter-tab <?= $is_active ? 'active' : '' ?>">
+                        <i class="<?= $tab_icons[$cat] ?? 'bi-dot' ?>"></i>
+                        <?= htmlspecialchars($cat) ?>
+                        <span class="count-pill"><?= $cnt ?></span>
+                    </a>
                 <?php endforeach; ?>
             </div>
-
         </div>
-    </section>
-</main>
-
-<!-- ── Footer ── -->
-<footer class="page-footer">
-    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <span class="footer-brand">Mindflayer<span>.</span></span>
-        <span class="footer-txt">All prices in Philippine Peso (₱) · Dine In · Takeaway · Delivery</span>
     </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    /* ── Scroll Reveal ── */
-    const revealEls = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('visible'), i * 80);
-                obs.unobserve(entry.target);
-            }
+    <!-- ── Products ── -->
+    <main>
+        <section class="products-section">
+            <div class="container">
+
+                <div class="results-bar">
+                    <form method="get" class="search-form">
+                        <?php if ($active_cat !== 'All'): ?>
+                            <input type="hidden" name="cat" value="<?= htmlspecialchars($active_cat) ?>">
+                        <?php endif; ?>
+                        <input
+                            type="search" name="q"
+                            value="<?= htmlspecialchars($search) ?>"
+                            class="form-control search-input"
+                            placeholder="Search for coffee, lattes, and more"
+                            aria-label="Search drinks">
+                    </form>
+                    <p class="mb-0 results-count">
+                        Showing <strong><?= count($filtered) ?></strong>
+                        drink<?= count($filtered) !== 1 ? 's' : '' ?>
+                        <?= $active_cat !== 'All' ? '&nbsp;· <strong>' . htmlspecialchars($active_cat) . '</strong>' : '' ?>
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <?php foreach ($filtered as $i => $p): ?>
+                        <div class="col-md-6 col-xl-4 reveal" style="transition-delay:<?= $i * 0.08 ?>s">
+
+                            <a href="../ProductDetailsPage/productdetails.php?id=<?= (int)$p['id'] ?>" class="product-card">
+
+                                <!-- Image -->
+                                <div class="card-img-wrap">
+                                    <?php if (file_exists(__DIR__ . '/' . $p['image'])): ?>
+                                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" loading="lazy" />
+                                    <?php else: ?>
+                                        <div class="img-ph">
+                                            <span class="img-ph-emoji"><?= $p['emoji'] ?></span>
+                                            <span class="img-ph-label"><?= htmlspecialchars($p['name']) ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                    <span class="card-badge"><?= htmlspecialchars($p['badge']) ?></span>
+                                    <span class="card-cat-pill"><?= htmlspecialchars($p['category']) ?></span>
+                                </div>
+
+                                <!-- Name + tagline -->
+                                <div class="c-body">
+                                    <h2 class="c-name"><?= htmlspecialchars($p['name']) ?></h2>
+                                    <p class="c-tagline"><?= htmlspecialchars($p['tagline']) ?></p>
+                                </div>
+
+                                <!-- Price + CTA -->
+                                <div class="c-footer">
+                                    <div>
+                                        <div class="price-lbl">Starting at</div>
+                                        <div class="price-val">₱<?= number_format($p['price']) ?></div>
+                                        <div class="price-sub"><?= $p['volume'] ?> · <?= $p['category'] ?></div>
+                                    </div>
+                                    <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0 cart-form"
+                                        onclick="event.stopPropagation();">
+                                        <input type="hidden" name="product_id" value="<?= (int)$p['id'] ?>">
+                                        <button type="submit" class="btn-add-cart">
+                                            <span class="btn-label-default">
+                                                Add to Cart <i class="bi bi-plus-circle"></i>
+                                            </span>
+                                            <span class="btn-label-added">
+                                                Added <i class="bi bi-check-circle-fill"></i>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="page-footer">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 container">
+            <span class="footer-brand">Mindflayer<span>.</span></span>
+            <span class="footer-txt">All prices in Philippine Peso (₱) · Dine In · Takeaway · Delivery</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        /* ── Scroll Reveal ── */
+        const revealEls = document.querySelectorAll('.reveal');
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
         });
-    }, { threshold: 0.1 });
-    revealEls.forEach(el => obs.observe(el));
+        revealEls.forEach(el => obs.observe(el));
 
-    /* ── Add to Cart Animation ── */
-    document.querySelectorAll('.cart-form').forEach(form => {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();         // stop default navigation
-            e.stopPropagation();
+        /* ── Add to Cart Animation ── */
+        document.querySelectorAll('.cart-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // stop default navigation
+                e.stopPropagation();
 
-            const btn = this.querySelector('.btn-add-cart');
+                // Check if user is logged in
+                if (!isLoggedIn()) {
+                    alert('You must be logged in first to add items to cart. Please log in to continue.');
+                    window.location.href = '../SignupPage/login.php';
+                    return;
+                }
 
-            // Already animating — ignore double-clicks
-            if (btn.classList.contains('added')) return;
+                const btn = this.querySelector('.btn-add-cart');
 
-            // Ripple
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            const size = Math.max(btn.offsetWidth, btn.offsetHeight);
-            ripple.style.cssText = `width:${size}px;height:${size}px;left:${btn.offsetWidth/2 - size/2}px;top:${btn.offsetHeight/2 - size/2}px`;
-            btn.appendChild(ripple);
-            ripple.addEventListener('animationend', () => ripple.remove());
+                // Already animating — ignore double-clicks
+                if (btn.classList.contains('added')) return;
 
-            // Swap to "Added" state
-            btn.classList.add('added');
+                // Ripple
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+                ripple.style.cssText = `width:${size}px;height:${size}px;left:${btn.offsetWidth/2 - size/2}px;top:${btn.offsetHeight/2 - size/2}px`;
+                btn.appendChild(ripple);
+                ripple.addEventListener('animationend', () => ripple.remove());
 
-            // Actually submit the form after a short delay so the animation is visible
-            const formData = new FormData(this);
-            const action   = this.action;
-            const method   = this.method;
+                // Swap to "Added" state
+                btn.classList.add('added');
 
-            setTimeout(() => {
-                // Submit via fetch so we stay on the page
-                fetch(action, { method, body: formData, credentials: 'same-origin' })
-                    .catch(() => {/* silent — cart may use session; page-load fallback below */});
-            }, 150);
+                // Actually submit the form after a short delay so the animation is visible
+                const formData = new FormData(this);
+                const action = this.action;
+                const method = this.method;
 
-            // Reset button back to default after 2 s
-            setTimeout(() => {
-                btn.classList.remove('added');
-            }, 2000);
+                setTimeout(() => {
+                    // Submit via fetch so we stay on the page
+                    fetch(action, {
+                            method,
+                            body: formData,
+                            credentials: 'same-origin'
+                        })
+                        .catch(() => {
+                            /* silent — cart may use session; page-load fallback below */ });
+                }, 150);
+
+                // Reset button back to default after 2 s
+                setTimeout(() => {
+                    btn.classList.remove('added');
+                }, 2000);
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
+
 </html>
