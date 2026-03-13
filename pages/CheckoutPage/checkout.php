@@ -220,11 +220,7 @@ $shop_name = "Mindflayer";
         }
 
         /* ══ Fields ══ */
-        .fld { margin-bottom: 0.65rem; }
-        .fld-row { display: grid; gap: 0.65rem; margin-bottom: 0.65rem; }
-        .fld-row.c2  { grid-template-columns: 1fr 1fr; }
-        .fld-row.c3  { grid-template-columns: 2fr 1fr 1.5fr; }
-        .fld-row.c-card { grid-template-columns: 1fr 1fr 1.6fr; }
+        .fld { margin-bottom: 0.7rem; }
 
         label.lbl {
             display: block;
@@ -315,10 +311,6 @@ $shop_name = "Mindflayer";
 
         @media (max-width: 520px) {
             .nav-links { display: none; }
-            .fld-row.c3 { grid-template-columns: 1fr 1fr; }
-            .fld-row.c3 > :last-child { grid-column: 1 / -1; }
-            .fld-row.c-card { grid-template-columns: 1fr 1fr; }
-            .fld-row.c-card > :last-child { grid-column: 1 / -1; }
         }
     </style>
 </head>
@@ -384,41 +376,39 @@ $shop_name = "Mindflayer";
                     <span class="sec-title">Contact &amp; Shipping</span>
                 </div>
 
-                <div class="fld-row c2">
-                    <div>
-                        <label for="fullName" class="lbl">Full Name</label>
-                        <input type="text" class="inp" id="fullName" name="fullName" placeholder="Juan Dela Cruz" required>
-                    </div>
-                    <div>
-                        <label for="phone" class="lbl">Mobile</label>
-                        <input type="tel" class="inp" id="phone" name="phone" placeholder="09XX XXX XXXX" required>
-                    </div>
+                <div class="fld">
+                    <label for="fullName" class="lbl">Full Name</label>
+                    <input type="text" class="inp" id="fullName" name="fullName" placeholder="Juan Dela Cruz" required>
                 </div>
 
-                <div class="fld-row c2">
-                    <div>
-                        <label for="email" class="lbl">Email</label>
-                        <input type="email" class="inp" id="email" name="email" placeholder="you@example.com" required>
-                    </div>
-                    <div>
-                        <label for="address" class="lbl">Delivery Address</label>
-                        <input type="text" class="inp" id="address" name="address" placeholder="Unit · street · barangay · city" required>
-                    </div>
+                <div class="fld">
+                    <label for="phone" class="lbl">Mobile Number</label>
+                    <input type="tel" class="inp" id="phone" name="phone" placeholder="09XX XXX XXXX" required>
                 </div>
 
-                <div class="fld-row c3">
-                    <div>
-                        <label for="city" class="lbl">City</label>
-                        <input type="text" class="inp" id="city" name="city" placeholder="Makati City" required>
-                    </div>
-                    <div>
-                        <label for="postal" class="lbl">ZIP</label>
-                        <input type="text" class="inp" id="postal" name="postal" maxlength="4" pattern="\d{4}" placeholder="1200" required>
-                    </div>
-                    <div>
-                        <label for="notes" class="lbl">Rider note</label>
-                        <input type="text" class="inp" id="notes" name="deliveryNotes" placeholder="Gate code…">
-                    </div>
+                <div class="fld">
+                    <label for="email" class="lbl">Email</label>
+                    <input type="email" class="inp" id="email" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="fld">
+                    <label for="address" class="lbl">Delivery Address</label>
+                    <input type="text" class="inp" id="address" name="address" placeholder="Unit · street · barangay · city" required>
+                </div>
+
+                <div class="fld">
+                    <label for="city" class="lbl">City</label>
+                    <input type="text" class="inp" id="city" name="city" placeholder="Makati City" required>
+                </div>
+
+                <div class="fld">
+                    <label for="postal" class="lbl">ZIP Code</label>
+                    <input type="text" class="inp" id="postal" name="postal" maxlength="4" pattern="\d{4}" placeholder="1200" required>
+                </div>
+
+                <div class="fld">
+                    <label for="notes" class="lbl">Rider Note <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--hint);">(optional)</span></label>
+                    <input type="text" class="inp" id="notes" name="deliveryNotes" placeholder="Gate code, landmark…">
                 </div>
 
                 <hr class="sec-divider">
@@ -439,20 +429,20 @@ $shop_name = "Mindflayer";
                     <input type="text" inputmode="numeric" maxlength="19" class="inp" id="cardNumber" placeholder="1234  5678  9012  3456" required>
                 </div>
 
-                <div class="fld-row c-card">
-                    <div>
-                        <label for="cardExpiry" class="lbl">Expiry</label>
-                        <input type="text" inputmode="numeric" maxlength="5" class="inp" id="cardExpiry" placeholder="08 / 28" required>
-                    </div>
-                    <div>
-                        <label for="cardCVC" class="lbl">CVC</label>
-                        <input type="text" inputmode="numeric" maxlength="3" class="inp" id="cardCVC" placeholder="123" required>
-                    </div>
-                    <div style="display:flex;align-items:flex-end;padding-bottom:0.32rem;">
-                        <div class="save-row">
-                            <input type="checkbox" id="saveCard">
-                            <label for="saveCard">Save for next time</label>
-                        </div>
+                <div class="fld">
+                    <label for="cardExpiry" class="lbl">Expiry Date</label>
+                    <input type="text" inputmode="numeric" maxlength="5" class="inp" id="cardExpiry" placeholder="08 / 28" required>
+                </div>
+
+                <div class="fld">
+                    <label for="cardCVC" class="lbl">CVC</label>
+                    <input type="text" inputmode="numeric" maxlength="3" class="inp" id="cardCVC" placeholder="123" required>
+                </div>
+
+                <div class="fld">
+                    <div class="save-row">
+                        <input type="checkbox" id="saveCard">
+                        <label for="saveCard">Save card for next time</label>
                     </div>
                 </div>
 
