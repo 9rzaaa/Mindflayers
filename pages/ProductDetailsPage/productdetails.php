@@ -747,106 +747,27 @@ function html($text) {
     </div><!-- /container -->
 </section>
 
-<!-- ═══ MODAL ════════════════════════════════════════════════ -->
-<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header-mf d-flex align-items-start justify-content-between">
-                <div>
-                    <div class="modal-title" id="productDetailModalLabel"><?= html($selectedProduct['name']) ?></div>
-                    <div class="modal-subtitle">"<?= html($selectedProduct['tagline']) ?>"</div>
-                </div>
-                <button type="button" class="btn-close mt-1" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+<footer style="background-color:var(--espresso);border-top:1px solid rgba(194,178,128,0.12);padding:1.5rem 2.5rem;">
+    <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <p class="mb-0" style="font-family:var(--font-display);font-size:0.9rem;font-weight:700;color:rgba(245,245,240,0.5);">
+            Mindflayer<span style="color:var(--sand);">.</span>
+        </p>
+        <span style="font-size:0.75rem;color:rgba(245,245,240,0.3);">All prices in Philippine Peso (₱) · Dine In · Takeaway · Delivery</span>
+        <div class="d-flex align-items-center gap-3">
+            <div style="display:flex;gap:1.5rem;">
+                <a href="#" style="color:rgba(245,245,240,0.4);font-size:0.78rem;text-decoration:none;transition:color 0.3s ease;" onmouseover="this.style.color='var(--sand)'" onmouseout="this.style.color='rgba(245,245,240,0.4)'">Privacy</a>
+                <a href="#" style="color:rgba(245,245,240,0.4);font-size:0.78rem;text-decoration:none;transition:color 0.3s ease;" onmouseover="this.style.color='var(--sand)'" onmouseout="this.style.color='rgba(245,245,240,0.4)'">Terms</a>
+                <a href="#" style="color:rgba(245,245,240,0.4);font-size:0.78rem;text-decoration:none;transition:color 0.3s ease;" onmouseover="this.style.color='var(--sand)'" onmouseout="this.style.color='rgba(245,245,240,0.4)'">Contact</a>
             </div>
-
-            <!-- Modal Body -->
-            <div class="modal-body-mf">
-
-                <!-- Image with price overlay -->
-                <div class="modal-img-wrap">
-                    <?php if (!empty($selectedProduct['image'])): ?>
-                        <img src="/Mindflayers/pages/ProductListPage/<?= html($selectedProduct['image']) ?>" alt="<?= html($selectedProduct['name']) ?>">
-                    <?php endif; ?>
-                    <div class="modal-img-overlay">
-                        <div>
-                            <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(232,216,176,0.6);margin-bottom:0.2rem;">Starting from</div>
-                            <div class="modal-img-price">₱<?= number_format($selectedProduct['price']) ?></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-content-inner">
-
-                    <!-- Badges + rating -->
-                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                        <span style="background:rgba(194,178,128,0.2);color:var(--mocha);border:1px solid rgba(194,178,128,0.5);border-radius:999px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem;">
-                            <?= html($selectedProduct['badge']) ?>
-                        </span>
-                        <span style="background:rgba(111,76,62,0.08);color:var(--mocha);border:1px solid rgba(111,76,62,0.2);border-radius:999px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem;">
-                            <?= html($selectedProduct['category']) ?>
-                        </span>
-                        <span style="color:var(--sand);font-size:0.85rem;">
-                            <?php for ($i = 0; $i < 5; $i++): ?>
-                                <i class="bi bi-star<?= $i < floor($selectedProduct['rating']) ? '-fill' : '' ?>"></i>
-                            <?php endfor; ?>
-                        </span>
-                        <span style="font-size:0.82rem;color:var(--text-light);"><?= number_format($selectedProduct['rating'],1) ?> · <?= html($selectedProduct['reviews']) ?> reviews</span>
-                    </div>
-
-                    <!-- Description -->
-                    <p class="modal-section-title">About this drink</p>
-                    <p style="font-size:0.92rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.5rem;"><?= html($selectedProduct['desc']) ?></p>
-
-                    <!-- Specs grid -->
-                    <p class="modal-section-title">Key Specifications</p>
-                    <div class="spec-grid mb-4">
-                        <?php foreach ($selectedProduct['specs'] as $spec):
-                            $specIcon = match(strtolower($spec['label'])) {
-                                'temperature' => 'bi-thermometer-half',
-                                'base'        => 'bi-cup-straw',
-                                'milk'        => 'bi-droplet-half',
-                                'caffeine'    => 'bi-lightning-charge',
-                                default       => $spec['icon'] ?? 'bi-dot',
-                            };
-                        ?>
-                            <div class="spec-card-mf">
-                                <div class="spec-card-icon"><i class="bi <?= html($specIcon) ?>"></i></div>
-                                <div class="spec-card-label"><?= html($spec['label']) ?></div>
-                                <div class="spec-card-value"><?= html($spec['value']) ?></div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-
-                    <!-- Quick info row -->
-                    <p class="modal-section-title">Quick Info</p>
-                    <div class="row g-2 mb-1" style="font-size:0.88rem;">
-                        <div class="col-6 d-flex align-items-center gap-2" style="color:var(--text-mid);">
-                            <i class="bi bi-rulers" style="color:var(--sand);"></i>
-                            <span><strong>Volume:</strong> <?= html($selectedProduct['volume']) ?></span>
-                        </div>
-                        <div class="col-6 d-flex align-items-center gap-2" style="color:var(--text-mid);">
-                            <i class="bi bi-fire" style="color:var(--sand);"></i>
-                            <span><strong>Calories:</strong> <?= html($selectedProduct['calories']) ?></span>
-                        </div>
-                    </div>
-
-                </div>
+            <div style="display:flex;gap:0.5rem;">
+                <a href="#" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(194,178,128,0.2);display:inline-flex;align-items:center;justify-content:center;color:rgba(245,245,240,0.5);font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;" onmouseover="this.style.borderColor='var(--sand)';this.style.color='var(--sand)'" onmouseout="this.style.borderColor='rgba(194,178,128,0.2)';this.style.color='rgba(245,245,240,0.5)'"><i class="bi bi-instagram"></i></a>
+                <a href="#" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(194,178,128,0.2);display:inline-flex;align-items:center;justify-content:center;color:rgba(245,245,240,0.5);font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;" onmouseover="this.style.borderColor='var(--sand)';this.style.color='var(--sand)'" onmouseout="this.style.borderColor='rgba(194,178,128,0.2)';this.style.color='rgba(245,245,240,0.5)'"><i class="bi bi-facebook"></i></a>
+                <a href="#" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(194,178,128,0.2);display:inline-flex;align-items:center;justify-content:center;color:rgba(245,245,240,0.5);font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;" onmouseover="this.style.borderColor='var(--sand)';this.style.color='var(--sand)'" onmouseout="this.style.borderColor='rgba(194,178,128,0.2)';this.style.color='rgba(245,245,240,0.5)'"><i class="bi bi-tiktok"></i></a>
             </div>
-
-            <!-- Modal Footer -->
-            <div class="modal-footer-mf">
-                <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0">
-                    <input type="hidden" name="product_id" value="<?= (int)$selectedProduct['id'] ?>">
-                    <button type="submit" class="btn-add-cart">
-                        <i class="bi bi-cart-fill"></i> Add to Cart
-                    </button>
-                </form>
-                <button class="btn-details" data-bs-dismiss="modal">
-                    <i class="bi bi-x-lg"></i> Close
-                </button>
-            </div>
+        </div>
+    </div>
+</footer>
 
         </div>
     </div>
