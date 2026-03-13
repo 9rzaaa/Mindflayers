@@ -13,6 +13,13 @@ $order_promo = "-₱60";
 $order_total = "₱540";
 $order_id = "MF-" . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 8));
 
+// Estimated delivery: 45–60 min from now (Philippine Time)
+$now      = new DateTime('now', new DateTimeZone('Asia/Manila'));
+$eta_from = clone $now; $eta_from->modify('+45 minutes');
+$eta_to   = clone $now; $eta_to->modify('+60 minutes');
+$eta_date  = $eta_from->format('F j, Y');
+$eta_range = $eta_from->format('g:i A') . ' – ' . $eta_to->format('g:i A');
+
 // Customer data from POST
 $fullName = htmlspecialchars($_POST['fullName'] ?? '');
 $email = htmlspecialchars($_POST['email'] ?? '');
@@ -136,8 +143,45 @@ $deliveryNotes = htmlspecialchars($_POST['deliveryNotes'] ?? '');
             font-size: 1rem;
             font-weight: 600;
             color: var(--espresso);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             display: inline-block;
+        }
+
+        /* ── Estimated Delivery ── */
+        .eta-banner {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            border: 1px solid rgba(194, 178, 128, 0.5);
+            border-radius: 8px;
+            padding: 0.65rem 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .eta-icon {
+            font-size: 0.95rem;
+            color: var(--mocha);
+            flex-shrink: 0;
+        }
+
+        .eta-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .eta-time {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--espresso);
+        }
+
+        .eta-date {
+            font-size: 0.82rem;
+            color: var(--text-mid);
         }
 
         .details-section {
@@ -326,6 +370,16 @@ $deliveryNotes = htmlspecialchars($_POST['deliveryNotes'] ?? '');
                 <h1 class="confirm-heading">Order Confirmed!</h1>
                 <p class="confirm-subtitle">Thank you for your order. We're already brewing your drinks.</p>
                 <div class="order-id-badge">Order #<?= $order_id ?></div>
+
+                <!-- Estimated Delivery -->
+                <div class="eta-banner">
+                    <i class="bi bi-clock eta-icon"></i>
+                    <div>
+                        <div class="eta-label">Estimated Delivery</div>
+                        <span class="eta-time"><?= $eta_range ?></span>
+                        <span class="eta-date ms-1">· <?= $eta_date ?></span>
+                    </div>
+                </div>
 
                 <div class="details-section">
                     <div class="details-title">Delivery Details</div>
