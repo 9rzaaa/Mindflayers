@@ -698,7 +698,7 @@ $team = [
     <p class="quote-body">
         Good coffee doesn't have to be complicated. It just has to be honest.
     </p>
-    <cite class="quote-attr">— Mara Santos, Founder of Mindflayer</cite>
+    <cite class="quote-attr">— Daniel Ling, Founder of Mindflayer</cite>
 </blockquote>
 
 
