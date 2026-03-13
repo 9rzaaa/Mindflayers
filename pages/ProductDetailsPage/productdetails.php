@@ -224,6 +224,8 @@ function html($text) {
             color: var(--text-light);
             margin-bottom: 1.75rem;
         }
+
+        /* ── Add to Cart Button ── */
         .btn-add-cart {
             background: linear-gradient(135deg, var(--sand), var(--cream));
             color: var(--espresso);
@@ -240,12 +242,62 @@ function html($text) {
             gap: 0.5rem;
             transition: all var(--transition);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            min-width: 180px;
+            justify-content: center;
         }
         .btn-add-cart:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(194, 178, 128, 0.45);
             color: var(--espresso);
         }
+
+        /* Added state */
+        .btn-add-cart.added {
+            background: linear-gradient(135deg, #2d7a4f, #3a9e65) !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(45, 122, 79, 0.4) !important;
+            pointer-events: none;
+        }
+        .btn-add-cart.added:hover { color: #fff; }
+
+        /* Ripple */
+        .btn-add-cart .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Label swap */
+        .btn-add-cart .btn-label-default,
+        .btn-add-cart .btn-label-added {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .btn-add-cart .btn-label-added {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .btn-add-cart.added .btn-label-default {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        .btn-add-cart.added .btn-label-added {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .btn-details {
             background: transparent;
             color: var(--mocha);
@@ -328,7 +380,12 @@ function html($text) {
             border-bottom-color: var(--sand);
             background: transparent;
         }
-        .tab-panel { padding: 2.5rem 2rem; }
+        .tab-panel {
+            padding: 2.5rem 0;
+            max-width: 100%;
+        }
+        .detail-tabs .container-fluid,
+        .tab-panel { padding-left: 0; padding-right: 0; }
 
         /* ── Spec cards ── */
         .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
@@ -375,92 +432,6 @@ function html($text) {
             color: var(--text-mid);
         }
 
-        /* ── Modal ── */
-        .modal-content {
-            border: none;
-            border-radius: 12px;
-            overflow: hidden;
-            background: var(--white);
-        }
-        .modal-header-mf {
-            background-color: var(--espresso);
-            padding: 1.25rem 1.75rem;
-            border-bottom: none;
-        }
-        .modal-header-mf .modal-title {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--cream);
-            letter-spacing: -0.02em;
-        }
-        .modal-header-mf .modal-subtitle {
-            font-size: 0.82rem;
-            color: rgba(232, 216, 176, 0.65);
-            font-style: italic;
-            margin-top: 0.15rem;
-        }
-        .modal-header-mf .btn-close {
-            filter: invert(1) brightness(0.8);
-        }
-        .modal-body-mf {
-            background: var(--linen);
-            padding: 0;
-        }
-        .modal-img-wrap {
-            height: 280px;
-            background: linear-gradient(135deg, var(--espresso), var(--mocha));
-            overflow: hidden;
-            position: relative;
-        }
-        .modal-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.85;
-        }
-        .modal-img-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(59,42,42,0.7) 0%, transparent 50%);
-            display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
-        }
-        .modal-img-price {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--cream);
-            letter-spacing: -0.03em;
-        }
-        .modal-content-inner { padding: 1.75rem; }
-        .modal-section-title {
-            font-family: var(--font-body);
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-light);
-            margin-bottom: 0.85rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(194, 178, 128, 0.25);
-        }
-        .modal-footer-mf {
-            background: var(--white);
-            border-top: 1px solid rgba(194, 178, 128, 0.2);
-            padding: 1.25rem 1.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .tab-panel {
-            padding: 2.5rem 0;
-            max-width: 100%;
-        }
-        .detail-tabs .container-fluid,
-        .tab-panel { padding-left: 0; padding-right: 0; }
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -571,10 +542,15 @@ function html($text) {
                         <div class="price-display">₱<?= number_format($selectedProduct['price']) ?></div>
                         <div class="price-label">Philippine Peso · Inclusive of taxes</div>
                     </div>
-                    <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0">
+                    <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0" id="cart-form">
                         <input type="hidden" name="product_id" value="<?= (int)$selectedProduct['id'] ?>">
-                        <button type="submit" class="btn-add-cart">
-                            <i class="bi bi-cart-fill"></i> Add to Cart
+                        <button type="submit" class="btn-add-cart" id="btn-add-cart">
+                            <span class="btn-label-default">
+                                <i class="bi bi-cart-fill"></i> Add to Cart
+                            </span>
+                            <span class="btn-label-added">
+                                <i class="bi bi-check-circle-fill"></i> Added
+                            </span>
                         </button>
                     </form>
                 </div>
@@ -769,10 +745,41 @@ function html($text) {
     </div>
 </footer>
 
-        </div>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    /* ── Add to Cart Animation ── */
+    const cartForm = document.getElementById('cart-form');
+    const btn      = document.getElementById('btn-add-cart');
+
+    cartForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Guard against double-clicks
+        if (btn.classList.contains('added')) return;
+
+        // Ripple
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        const size = Math.max(btn.offsetWidth, btn.offsetHeight);
+        ripple.style.cssText = `width:${size}px;height:${size}px;left:${btn.offsetWidth/2 - size/2}px;top:${btn.offsetHeight/2 - size/2}px`;
+        btn.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+
+        // Swap to "Added" state
+        btn.classList.add('added');
+
+        // Submit via fetch — stay on the page
+        fetch(cartForm.action, {
+            method: cartForm.method,
+            body: new FormData(cartForm),
+            credentials: 'same-origin'
+        }).catch(() => {/* silent fallback */});
+
+        // Reset after 2s
+        setTimeout(() => {
+            btn.classList.remove('added');
+        }, 2000);
+    });
+</script>
 </body>
 </html>
