@@ -45,35 +45,65 @@ $shop_name = "Mindflayer";
             min-height: 100vh;
         }
 
-        .profile-navbar {
+        /* Navbar (matches homepage look) */
+        .navbar {
             background-color: var(--espresso);
-            color: var(--cream);
-            padding: 0.9rem 1.5rem;
+            padding: 1.1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
         }
 
-        .btn-home-nav {
+        .navbar-brand {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--cream) !important;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand span.dot {
+            color: var(--sand);
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(232, 216, 176, 0.75) !important;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.25rem 1rem !important;
+            transition: color var(--transition);
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--cream) !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--cream) !important;
+        }
+
+        .btn-nav-cta {
             background-color: var(--sand);
-            color: var(--espresso);
-            font-family: var(--font-body);
+            color: var(--espresso) !important;
             font-size: 0.82rem;
             font-weight: 500;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 1.4rem !important;
             border-radius: 2px;
             border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+            transition: background var(--transition), transform var(--transition);
         }
 
-        .btn-home-nav:hover {
+        .btn-nav-cta:hover {
             background-color: var(--cream);
-            color: var(--espresso);
             transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(194, 178, 128, 0.4);
         }
 
         .profile-brand {
@@ -249,17 +279,37 @@ $shop_name = "Mindflayer";
 </head>
 
 <body>
-    <header class="profile-navbar">
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="../../index.php" class="d-flex align-items-center gap-2 text-decoration-none text-light">
-                <span class="profile-brand">☕ <?= $shop_name ?><span class="dot">.</span></span>
+    <!-- Navbar (same structure as homepage) -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../../index.php">
+                ☕ <?= $shop_name ?><span class="dot">.</span>
             </a>
-            <!-- Home button styled similarly to primary CTA, text only -->
-            <a href="../../index.php" class="btn-home-nav">
-                Home
-            </a>
+
+            <button class="border-0 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMainProfile" aria-controls="navMainProfile" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="text-warning bi bi-list fs-4"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMainProfile">
+                <ul class="gap-1 mx-auto navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../AboutPage/about.php">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#contact">Locations</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="./profile.php">Profile</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2">
+                    <a href="../../index.php" class="nav-link" style="font-size: 0.85rem;">
+                        Home
+                    </a>
+                    <a href="../CheckoutPage/checkout.php" class="btn-nav-cta nav-link">
+                        Checkout <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="profile-wrapper">
         <div class="mb-3">
