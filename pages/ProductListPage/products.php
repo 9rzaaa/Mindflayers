@@ -66,32 +66,75 @@ foreach ($products as $p) {
         }
 
         /* ═══════════════════════════════
-           NAVBAR
+           NAVBAR (match index.php)
         ═══════════════════════════════ */
         .navbar {
             background: var(--espresso);
-            padding: 1rem 2.5rem;
-            border-bottom: 1px solid rgba(194,178,128,0.15);
-            position: sticky; top: 0; z-index: 1000;
+            padding: 1.1rem 2.5rem;
+            border-bottom: 1px solid rgba(194,178,128,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .navbar-brand {
-            font-family: var(--font-serif); font-size: 1.4rem; font-weight: 900;
-            color: var(--cream) !important; display: flex; align-items: center; gap: 0.4rem;
+            font-family: var(--font-serif);
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--cream) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            letter-spacing: -0.02em;
         }
         .navbar-brand .dot { color: var(--sand); }
-        .nav-back {
-            font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
-            color: rgba(232,216,176,0.6) !important; display: flex; align-items: center; gap: 0.4rem;
-            text-decoration: none; transition: color 0.25s ease;
+
+        .navbar-nav .nav-link {
+            color: rgba(232, 216, 176, 0.75) !important;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.25rem 1rem !important;
+            transition: color var(--ease);
         }
-        .nav-back:hover { color: var(--sand) !important; }
-        .btn-nav-order {
-            background: var(--sand); color: var(--espresso) !important;
-            font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-            padding: 0.45rem 1.3rem !important; border-radius: 2px; text-decoration: none;
-            transition: background 0.25s ease, transform 0.25s ease;
+        .navbar-nav .nav-link:hover {
+            color: var(--cream) !important;
         }
-        .btn-nav-order:hover { background: var(--cream); transform: translateY(-1px); }
+        .navbar-nav .nav-link.active {
+            color: var(--cream) !important;
+        }
+
+        .btn-nav-cta {
+            background: linear-gradient(135deg, var(--sand), var(--cream));
+            color: var(--espresso) !important;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.6rem 1.7rem !important;
+            border-radius: 2px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 26px rgba(194, 178, 128, 0.28);
+            transition: transform var(--ease), box-shadow var(--ease), filter var(--ease);
+        }
+        .btn-nav-cta::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateX(-110%);
+            transition: transform 0.45s ease;
+        }
+        .btn-nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(194, 178, 128, 0.45);
+            filter: saturate(1.05);
+        }
+        .btn-nav-cta:hover::after {
+            transform: translateX(0);
+        }
 
         /* ═══════════════════════════════
            PAGE HEADER
@@ -448,10 +491,9 @@ foreach ($products as $p) {
             </ul>
 
             <div class="d-flex align-items-center gap-2">
-                <a href="../ShoppingCartPage/shoppingcart.php" class="nav-back">
-                    <i class="bi bi-bag"></i> Shopping Cart
+                <a href="../ShoppingCartPage/shoppingcart.php" class="btn-nav-cta nav-link">
+                    Shopping Cart <i class="bi bi-bag ms-1"></i>
                 </a>
-                <a href="../ShoppingCartPage/shoppingcart.php" class="btn-nav-order">Order Now</a>
             </div>
         </div>
     </div>
