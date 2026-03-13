@@ -22,12 +22,6 @@ if (!$selectedProduct) {
 function html($text) {
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
-
-$iconMap = [
-    'specs'    => 'bi-list-check',
-    'reviews'  => 'bi-chat-square-text',
-    'shipping' => 'bi-truck',
-];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,226 +29,829 @@ $iconMap = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= html($selectedProduct['name']) ?> · Mindflayer Coffee</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+
     <style>
-        body { background: #F9F7F3; font-family: 'DM Sans', sans-serif; }
-        .card-hero { border: 1px solid rgba(0,0,0,.06); border-radius: 0.8rem; background: #fff; }
-        .card-hero img { border-top-left-radius: 0.8rem; border-top-right-radius: 0.8rem; }
-        .modal-content { border-radius: 1rem; overflow: hidden; }
-        .modal-header { border-bottom: 1px solid #e8e5e0; background: linear-gradient(110deg, #f8f1e8, #fff7ef); }
-        .modal-body { background: radial-gradient(circle at top left, #fffaf3 0%, #fef9f5 60%, #f6efe4 100%); }
-        .section-heading { font-family: var(--font-serif); font-weight: 700; margin-top: 1.2rem; margin-bottom: 0.75rem; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 0.06em; color: #5b3f2f; }
-        .section-heading i { margin-right: 0.4rem; color: #8b5e3c; }
-        .tag-badge { border-radius: 0.45rem; padding: 0.22rem 0.65rem; }
-        .tasting-badge { background: #fff; border: 1px solid #e2dace; border-radius: 0.55rem; color: #6b5138; }
-        .spec-row { margin-bottom: 0.55rem; }
-        .spec-label { color: #7b5b4a; font-weight: 500; }
-        .ship-list li { margin-bottom: 0.45rem; }
-        .product-banner { border-left: 4px solid #8C6647; padding-left: 0.85rem; margin-top: 1.2rem; }
-        .tag-badge { font-size: 0.75rem; border-radius: 0.35rem; }
-        .btn-brown { background: #8b5e3c; color: #fff; border-color: #8b5e3c; }
-        .btn-brown:hover { background: #79523a; color: #fff; }
-        .spec-card { background: #fff; border: 1px solid #e6dfd4; border-radius: 0.75rem; padding: 0.95rem; min-height: 76px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .spec-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
-        .spec-card-title { display: flex; align-items: center; gap: 0.45rem; font-weight: 600; color: #5d3f2a; margin-bottom: 0.35rem; }
-        .spec-card-title i { color: #8c6a4f; }
-        .spec-card-value { color: #6f5b50; font-size: 0.9rem; }
-        /* Modal: left landscape image gallery */
-        .modal-gallery-left { flex: 0 0 42%; max-width: 42%; }
-        .modal-gallery-main {
-            aspect-ratio: 16 / 10;
-            border-radius: 0.65rem;
-            overflow: hidden;
-            background: #E8D8B0;
-            border: 1px solid #e6dac8;
+        :root {
+            --espresso: #3B2A2A;
+            --mocha: #6F4C3E;
+            --sand: #C2B280;
+            --cream: #E8D8B0;
+            --linen: #F5F5F0;
+            --white: #FFFFFF;
+            --text-dark: #2A1E1E;
+            --text-mid: #6F4C3E;
+            --text-light: #9C8878;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .modal-gallery-main img { width: 100%; height: 100%; object-fit: cover; }
-        @media (max-width: 767px) { .modal-gallery-left { flex: 0 0 100%; max-width: 100%; order: -1; } }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--linen);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 { font-family: var(--font-display); }
+        a { text-decoration: none; }
+
+        /* ── Navbar ── */
+        .navbar {
+            background-color: var(--espresso);
+            padding: 1.1rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
+        }
+        .navbar-brand {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--cream) !important;
+            letter-spacing: -0.02em;
+        }
+        .navbar-brand span.dot { color: var(--sand); }
+        .navbar-nav .nav-link {
+            color: rgba(232, 216, 176, 0.75) !important;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.25rem 1rem !important;
+            transition: color var(--transition);
+        }
+        .navbar-nav .nav-link:hover { color: var(--cream) !important; }
+        .btn-nav-cta {
+            background-color: var(--sand);
+            color: var(--espresso) !important;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.4rem !important;
+            border-radius: 2px;
+            transition: background var(--transition), transform var(--transition);
+        }
+        .btn-nav-cta:hover { background-color: var(--cream); transform: translateY(-1px); }
+        @media (max-width: 991.98px) { .navbar { padding: 0.9rem 1.5rem; } }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb-bar {
+            background: var(--white);
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
+            padding: 0.75rem 0;
+        }
+        .breadcrumb-item a {
+            color: var(--text-light);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            transition: color var(--transition);
+        }
+        .breadcrumb-item a:hover { color: var(--mocha); }
+        .breadcrumb-item.active {
+            color: var(--text-mid);
+            font-size: 0.82rem;
+        }
+        .breadcrumb-item + .breadcrumb-item::before { color: var(--text-light); }
+
+        /* ── Back Arrow ── */
+        .btn-back-arrow {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(194, 178, 128, 0.4);
+            background: transparent;
+            color: var(--text-mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            transition: all var(--transition);
+        }
+        .btn-back-arrow:hover {
+            background: var(--espresso);
+            border-color: var(--espresso);
+            color: var(--cream);
+        }
+
+        /* ── Hero Product Section ── */
+        .product-hero {
+            background-color: var(--white);
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
+        }
+        .product-image-wrap {
+            position: relative;
+            background: linear-gradient(135deg, var(--espresso), var(--mocha));
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .product-image-wrap:hover img { transform: scale(1.04); }
+        .product-image-fallback {
+            font-size: 6rem;
+            line-height: 1;
+        }
+        .product-badge-pill {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(194, 178, 128, 0.2);
+            color: var(--mocha);
+            border: 1px solid rgba(194, 178, 128, 0.5);
+            margin-bottom: 0.75rem;
+        }
+        .product-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--espresso);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+        .product-tagline {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .rating-stars { color: var(--sand); font-size: 0.9rem; }
+        .rating-num { font-weight: 700; color: var(--espresso); font-size: 0.95rem; }
+        .rating-count { color: var(--text-light); font-size: 0.85rem; }
+        .price-display {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--espresso);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+        .price-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: 1.75rem;
+        }
+        .btn-add-cart {
+            background: linear-gradient(135deg, var(--sand), var(--cream));
+            color: var(--espresso);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(194, 178, 128, 0.45);
+            color: var(--espresso);
+        }
+        .btn-details {
+            background: transparent;
+            color: var(--mocha);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 0.9rem 1.6rem;
+            border: 1px solid rgba(111, 76, 62, 0.35);
+            border-radius: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .btn-details:hover {
+            border-color: var(--mocha);
+            background: rgba(111, 76, 62, 0.05);
+            color: var(--espresso);
+        }
+
+        /* ── Quick Stats Row ── */
+        .quick-stats {
+            display: flex;
+            gap: 0;
+            border: 1px solid rgba(194, 178, 128, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .quick-stat {
+            flex: 1;
+            padding: 0.85rem 1rem;
+            text-align: center;
+            border-right: 1px solid rgba(194, 178, 128, 0.3);
+        }
+        .quick-stat:last-child { border-right: none; }
+        .quick-stat-val {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--espresso);
+            display: block;
+        }
+        .quick-stat-lbl {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+        }
+
+        /* ── Tabs / Detail Sections ── */
+        .detail-tabs {
+            background: var(--white);
+            border-top: 1px solid rgba(194, 178, 128, 0.2);
+            padding-top: 0;
+        }
+        .nav-tabs-mf {
+            border-bottom: 1px solid rgba(194, 178, 128, 0.25);
+            gap: 0;
+            padding: 0;
+        }
+        .nav-tabs-mf .nav-link {
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            padding: 1rem 1.25rem;
+            margin-bottom: -1px;
+            transition: all var(--transition);
+        }
+        .nav-tabs-mf .nav-link:hover { color: var(--mocha); }
+        .nav-tabs-mf .nav-link.active {
+            color: var(--espresso);
+            border-bottom-color: var(--sand);
+            background: transparent;
+        }
+        .tab-panel { padding: 2.5rem 2rem; }
+
+        /* ── Spec cards ── */
+        .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+        .spec-card-mf {
+            background: var(--linen);
+            border: 1px solid rgba(194, 178, 128, 0.3);
+            border-radius: 8px;
+            padding: 1.1rem;
+            transition: all var(--transition);
+        }
+        .spec-card-mf:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(59, 42, 42, 0.08);
+            border-color: rgba(194, 178, 128, 0.6);
+        }
+        .spec-card-icon {
+            font-size: 1.2rem;
+            color: var(--sand);
+            margin-bottom: 0.5rem;
+        }
+        .spec-card-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: 0.2rem;
+        }
+        .spec-card-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--espresso);
+        }
+
+        /* ── Taste pills ── */
+        .taste-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.9rem;
+            background: var(--linen);
+            border: 1px solid rgba(194, 178, 128, 0.4);
+            border-radius: 999px;
+            font-size: 0.82rem;
+            color: var(--text-mid);
+        }
+
+        /* ── Modal ── */
+        .modal-content {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--white);
+        }
+        .modal-header-mf {
+            background-color: var(--espresso);
+            padding: 1.25rem 1.75rem;
+            border-bottom: none;
+        }
+        .modal-header-mf .modal-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--cream);
+            letter-spacing: -0.02em;
+        }
+        .modal-header-mf .modal-subtitle {
+            font-size: 0.82rem;
+            color: rgba(232, 216, 176, 0.65);
+            font-style: italic;
+            margin-top: 0.15rem;
+        }
+        .modal-header-mf .btn-close {
+            filter: invert(1) brightness(0.8);
+        }
+        .modal-body-mf {
+            background: var(--linen);
+            padding: 0;
+        }
+        .modal-img-wrap {
+            height: 280px;
+            background: linear-gradient(135deg, var(--espresso), var(--mocha));
+            overflow: hidden;
+            position: relative;
+        }
+        .modal-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+        }
+        .modal-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(59,42,42,0.7) 0%, transparent 50%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        .modal-img-price {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--cream);
+            letter-spacing: -0.03em;
+        }
+        .modal-content-inner { padding: 1.75rem; }
+        .modal-section-title {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.85rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(194, 178, 128, 0.25);
+        }
+        .modal-footer-mf {
+            background: var(--white);
+            border-top: 1px solid rgba(194, 178, 128, 0.2);
+            padding: 1.25rem 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .tab-panel {
+            padding: 2.5rem 0;
+            max-width: 100%;
+        }
+        .detail-tabs .container-fluid,
+        .tab-panel { padding-left: 0; padding-right: 0; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.6s ease both; }
+        .fade-up-delay { animation: fadeUp 0.6s 0.15s ease both; }
     </style>
 </head>
 <body>
-<header class="py-3 bg-white border-bottom">
-    <div class="container d-flex justify-content-between align-items-center">
-        <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn btn-link text-decoration-none">
-            <i class="bi bi-chevron-left"></i> Back to Menu
+
+<!-- ═══ NAVBAR ═══════════════════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Mindflayers/index.php">
+            ☕ Mindflayer<span class="dot">.</span>
         </a>
-        <div class="d-flex gap-2">
-            <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn btn-outline-dark btn-sm">Menu</a>
-            <a href="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="btn btn-outline-dark btn-sm">
-                Shopping Cart
+        <button class="border-0 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+            <i class="text-warning bi bi-list fs-4"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navMain">
+            <ul class="gap-1 mx-auto navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/Mindflayers/pages/ProductListPage/products.php">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Mindflayers/pages/AboutPage/about.php">Our Story</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Mindflayers/index.php#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Mindflayers/index.php#contact">Locations</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Mindflayers/pages/ProfilePage/profile.php">Profile</a></li>
+            </ul>
+            <div class="d-flex align-items-center gap-2">
+                <a href="/Mindflayers/pages/SignupPage/login.php" class="nav-link" style="font-size:0.85rem;">Login</a>
+                <a href="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="btn-nav-cta nav-link">
+                    <i class="bi bi-bag me-1"></i> Shopping Cart
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══ BREADCRUMB ════════════════════════════════════════════ -->
+<div class="breadcrumb-bar">
+    <div class="container d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn-back-arrow" aria-label="Back to Menu">
+                <i class="bi bi-arrow-left"></i>
             </a>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/Mindflayers/index.php">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Mindflayers/pages/ProductListPage/products.php">Menu</a></li>
+                    <li class="breadcrumb-item active"><?= html($selectedProduct['name']) ?></li>
+                </ol>
+            </nav>
         </div>
     </div>
-</header>
+</div>
 
-<main class="container py-5">
-    <div class="card card-hero overflow-hidden shadow-sm">
-        <img src="<?= html($selectedProduct['image']) ?>" alt="<?= html($selectedProduct['name']) ?>" class="img-fluid" style="max-height: 420px; object-fit: cover; width: 100%;">
-        <div class="card-body p-4">
-            <h1 class="h2"><?= html($selectedProduct['name']) ?></h1>
-            <p class="text-secondary mb-2"><?= html($selectedProduct['tagline']) ?></p>
-            <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
-                <span class="badge bg-warning text-dark tag-badge"><?= html($selectedProduct['badge']) ?></span>
-                <span class="badge bg-secondary text-white tag-badge"><?= html($selectedProduct['category']) ?></span>
-                <span class="badge bg-light text-dark tag-badge"><?= html($selectedProduct['volume']) ?></span>
-            </div>
+<!-- ═══ PRODUCT HERO ══════════════════════════════════════════ -->
+<section class="product-hero py-5">
+    <div class="container py-2">
+        <div class="row g-5 align-items-center">
 
-            <div class="row gy-3">
-                <div class="col-md-5">
-                    <div class="p-3 rounded-3 h-100" style="background:#FBF7F2;">
-                        <h5 class="section-heading"><i class="bi bi-bag-heart"></i> Quick Info</h5>
-                        <p class="mb-2"><strong>Price:</strong> ₱<?= number_format($selectedProduct['price']) ?></p>
-                        <p class="mb-2"><strong>Calories:</strong> <?= html($selectedProduct['calories']) ?></p>
-                        <p class="mb-2"><strong>Rating:</strong> <?= number_format($selectedProduct['rating'], 1) ?> <i class="bi bi-star-fill text-warning"></i> (<?= html($selectedProduct['reviews']) ?> reviews)</p>
-                        <a href="#productDetailModal" class="btn btn-sm btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#productDetailModal">
-                            Open Full Product Modal
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="p-3 rounded-3" style="background:#FFF8EF;">
-                        <h5 class="section-heading"><i class="bi bi-lightbulb"></i> Why You’ll Love It</h5>
-                        <p class="mb-0"><?= html($selectedProduct['desc']) ?></p>
-                    </div>
+            <!-- Left: Image -->
+            <div class="col-lg-5 fade-up">
+                <div class="product-image-wrap">
+                    <?php if (!empty($selectedProduct['image'])): ?>
+                        <img src="/Mindflayers/pages/ProductListPage/<?= html($selectedProduct['image']) ?>" alt="<?= html($selectedProduct['name']) ?>">
+                    <?php else: ?>
+                        <div class="product-image-fallback">☕</div>
+                    <?php endif; ?>
                 </div>
             </div>
 
-            <div class="product-banner text-muted mt-4">
-                <small><strong>Tip:</strong> Scroll inside the modal for segmented details: specs, reviews, shipping, and preparation callout. This is built for clarity and easy scanning.</small>
+            <!-- Right: Info -->
+            <div class="col-lg-7 fade-up-delay">
+                <div class="product-badge-pill"><?= html($selectedProduct['badge']) ?></div>
+                <h1 class="product-title"><?= html($selectedProduct['name']) ?></h1>
+                <p class="product-tagline"><?= html($selectedProduct['tagline']) ?></p>
+
+                <!-- Rating -->
+                <div class="rating-row">
+                    <span class="rating-stars">
+                        <?php for ($i = 0; $i < 5; $i++): ?>
+                            <i class="bi bi-star<?= $i < floor($selectedProduct['rating']) ? '-fill' : ($i < $selectedProduct['rating'] ? '-half' : '') ?>"></i>
+                        <?php endfor; ?>
+                    </span>
+                    <span class="rating-num"><?= number_format($selectedProduct['rating'], 1) ?></span>
+                    <span class="rating-count">(<?= html($selectedProduct['reviews']) ?> reviews)</span>
+                </div>
+
+                <!-- Quick stats -->
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <span class="quick-stat-val"><?= html($selectedProduct['volume']) ?></span>
+                        <span class="quick-stat-lbl">Volume</span>
+                    </div>
+                    <div class="quick-stat">
+                        <span class="quick-stat-val"><?= html($selectedProduct['calories']) ?></span>
+                        <span class="quick-stat-lbl">Calories</span>
+                    </div>
+                    <div class="quick-stat">
+                        <span class="quick-stat-val"><?= html($selectedProduct['category']) ?></span>
+                        <span class="quick-stat-lbl">Category</span>
+                    </div>
+                </div>
+
+                <!-- Price + CTA -->
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div>
+                        <div class="price-display">₱<?= number_format($selectedProduct['price']) ?></div>
+                        <div class="price-label">Philippine Peso · Inclusive of taxes</div>
+                    </div>
+                    <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0">
+                        <input type="hidden" name="product_id" value="<?= (int)$selectedProduct['id'] ?>">
+                        <button type="submit" class="btn-add-cart">
+                            <i class="bi bi-cart-fill"></i> Add to Cart
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</main>
+</section>
 
-<!-- Modal === -->
-<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">  
-                <div>
-                    <h5 class="modal-title" id="productDetailModalLabel">
-                        <?= html($selectedProduct['name']) ?> <small class="text-muted">· <?= html($selectedProduct['category']) ?></small>
-                    </h5>
-                    <p class="mb-0 text-secondary" style="font-size: 0.9rem;">"<?= html($selectedProduct['tagline']) ?>"</p>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>  
-            <div class="modal-body p-4">
-                <div class="row g-4 align-items-start flex-lg-nowrap mb-4">
-                    <!-- Left: single photo -->
-                    <div class="modal-gallery-left col-12 col-lg-5">
-                        <div class="modal-gallery-main">
-                            <img src="<?= html($selectedProduct['image']) ?>" alt="<?= html($selectedProduct['name']) ?>" class="img-fluid">
+<!-- ═══ DETAIL TABS ═══════════════════════════════════════════ -->
+<section class="detail-tabs">
+    <div class="container px-0">
+    <ul class="nav nav-tabs-mf" id="detailTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-about" type="button">About</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-specs" type="button">Specifications</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-taste" type="button">Taste Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-shipping" type="button">Delivery</button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+
+        <!-- About Tab -->
+        <div class="tab-pane fade show active" id="tab-about">
+            <div class="tab-panel">
+                <div class="row g-5">
+                    <div class="col-lg-7">
+                        <p class="mb-0" style="font-size:1rem;line-height:1.85;color:var(--text-mid);">
+                            <?= html($selectedProduct['desc']) ?>
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <span class="taste-pill"><i class="bi bi-heart-fill" style="color:var(--sand);font-size:0.75rem;"></i> Cozy Flavor</span>
+                            <span class="taste-pill"><i class="bi bi-lightning-fill" style="color:var(--sand);font-size:0.75rem;"></i> Energy Boost</span>
+                            <span class="taste-pill"><i class="bi bi-emoji-smile-fill" style="color:var(--sand);font-size:0.75rem;"></i> Feel Good</span>
+                            <span class="taste-pill"><i class="bi bi-award-fill" style="color:var(--sand);font-size:0.75rem;"></i> <?= html($selectedProduct['badge']) ?></span>
                         </div>
                     </div>
-                    <!-- Right: product info -->
-                    <div class="col-12 col-lg-7">
-                        <p class="text-muted mb-3"><?= html($selectedProduct['tagline']) ?></p>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            <span class="badge bg-warning text-dark"><?= html($selectedProduct['badge']) ?></span>
-                            <span class="badge bg-info text-white"><?= html($selectedProduct['category']) ?></span>
-                            <span class="badge bg-light text-dark"><?= html($selectedProduct['volume']) ?></span>
-                        </div>
-                        <div class="row g-2 mb-3 text-smaller" style="font-size:0.93rem;">
-                            <div class="col-6"><i class="bi bi-currency-dollar"></i> <strong>Price:</strong> ₱<?= number_format($selectedProduct['price']) ?></div>
-                            <div class="col-6"><i class="bi bi-thermometer-half"></i> <strong>Calories:</strong> <?= html($selectedProduct['calories']) ?></div>
-                            <div class="col-6"><i class="bi bi-star-fill text-warning"></i> <strong>Rating:</strong> <?= number_format($selectedProduct['rating'],1) ?> ⭐</div>
-                            <div class="col-6"><i class="bi bi-chat-dots"></i> <strong>Reviews:</strong> <?= html($selectedProduct['reviews']) ?></div>
-                        </div>
-                        <div class="d-flex flex-wrap gap-2">
-                            <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0">
-                                <input type="hidden" name="product_id" value="<?= (int) $selectedProduct['id'] ?>">
-                                <button type="submit" class="btn btn-brown text-white">
-                                    <i class="bi bi-cart-fill"></i> Add to Cart <i class="bi bi-plus-circle ms-1"></i>
-                                </button>
-                            </form>
-                            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                <i class="bi bi-x-lg"></i> Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <section class="mb-4">
-                    <h6 class="section-heading"><i class="bi bi-info-circle"></i> About this drink</h6>
-                    <p><?= html($selectedProduct['desc']) ?></p>
-                    <div class="d-flex flex-wrap gap-2 mt-3">
-                        <span class="badge bg-light text-dark p-2 border"><i class="bi bi-heart-fill text-danger"></i> Cozy Flavor</span>
-                        <span class="badge bg-light text-dark p-2 border"><i class="bi bi-lightning-fill text-warning"></i> Energy Boost</span>
-                        <span class="badge bg-light text-dark p-2 border"><i class="bi bi-emoji-smile-fill text-success"></i> Feel Good</span>
-                    </div>
-                </section>
-
-                <section class="mb-4">
-                    <h6 class="section-heading"><i class="bi bi-clipboard-data"></i> Taste Profile</h6>
-                    <div class="row g-2 text-muted" style="font-size:0.92rem;">
-                        <div class="col-6"><i class="bi bi-droplet-half"></i> Creamy</div>
-                        <div class="col-6"><i class="bi bi-stars"></i> Sweet</div>
-                        <div class="col-6"><i class="bi bi-flower1"></i> Floral</div>
-                        <div class="col-6"><i class="bi bi-snow"></i> Cool Finish</div>
-                    </div>
-                </section>
-
-                <section class="mb-4">
-                    <h4 class="section-heading" style="font-size:1.2rem; font-family:var(--font-serif);"> <i class="bi bi-list-check"></i> Key Specifications</h4>
-                    <div class="row g-2 mb-3">
-                        <?php
-                        $mainSpecs = array_filter($selectedProduct['specs'], function ($spec) {
-                            return in_array(strtolower($spec['label']), ['temperature', 'base', 'milk', 'caffeine']);
-                        });
-                        ?>
-                        <?php foreach ($mainSpecs as $spec): ?>
+                    <div class="col-lg-5">
+                        <div style="background:var(--espresso);border-radius:10px;padding:1.75rem;">
+                            <p style="font-family:var(--font-display);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sand);margin-bottom:1rem;">At a glance</p>
                             <?php
-                            $specIcon = match(strtolower($spec['label'])) {
-                                'temperature' => 'bi-thermometer-half',
-                                'base' => 'bi-cup-straw',
-                                'milk' => 'bi-droplet-half',
-                                'caffeine' => 'bi-lightning-charge',
-                                default => $spec['icon'] ?? 'bi-chevron-right',
-                            };
-                            ?>
-                            <div class="col-6 col-md-3">
-                                <div class="p-2 rounded-3 border bg-white text-center" style="min-height:88px;">
-                                    <i class="bi <?= html($specIcon) ?> fs-3 text-brown"></i>
-                                    <div class="fw-bold" style="font-size:0.9rem;"><?= html($spec['label']) ?></div>
-                                    <small class="text-secondary"><?= html($spec['value']) ?></small>
+                            $glanceItems = [
+                                ['bi-geo-alt', 'Origin', 'Ethically sourced beans'],
+                                ['bi-clock', 'Prep Time', 'Made fresh to order'],
+                                ['bi-recycle', 'Packaging', 'Eco-friendly, compostable'],
+                                ['bi-wifi', 'Dine In', 'Free WiFi available'],
+                            ];
+                            foreach ($glanceItems as $item): ?>
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div style="width:32px;height:32px;border-radius:50%;background:rgba(194,178,128,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                        <i class="bi <?= $item[0] ?>" style="color:var(--sand);font-size:0.85rem;"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(232,216,176,0.5);"><?= $item[1] ?></div>
+                                        <div style="font-size:0.88rem;color:var(--cream);"><?= $item[2] ?></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specs Tab -->
+        <div class="tab-pane fade" id="tab-specs">
+            <div class="tab-panel">
+                <div class="spec-grid">
+                    <?php foreach ($selectedProduct['specs'] as $spec):
+                        $specIcon = match(strtolower($spec['label'])) {
+                            'temperature' => 'bi-thermometer-half',
+                            'base'        => 'bi-cup-straw',
+                            'milk'        => 'bi-droplet-half',
+                            'caffeine'    => 'bi-lightning-charge',
+                            'sugar'       => 'bi-pentagon',
+                            'size'        => 'bi-rulers',
+                            'origin'      => 'bi-geo-alt',
+                            default       => $spec['icon'] ?? 'bi-dot',
+                        };
+                    ?>
+                        <div class="spec-card-mf">
+                            <div class="spec-card-icon"><i class="bi <?= html($specIcon) ?>"></i></div>
+                            <div class="spec-card-label"><?= html($spec['label']) ?></div>
+                            <div class="spec-card-value"><?= html($spec['value']) ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Taste Profile Tab -->
+        <div class="tab-pane fade" id="tab-taste">
+            <div class="tab-panel">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-6">
+                        <?php
+                        $tastePairs = [
+                            ['Sweetness',  85, 'var(--sand)'],
+                            ['Bitterness', 30, '#8C6647'],
+                            ['Creaminess', 90, '#C2B280'],
+                            ['Intensity',  60, '#6F4C3E'],
+                        ];
+                        foreach ($tastePairs as $taste): ?>
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span style="font-size:0.82rem;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.08em;"><?= $taste[0] ?></span>
+                                    <span style="font-size:0.82rem;color:var(--text-light);"><?= $taste[1] ?>%</span>
+                                </div>
+                                <div style="height:6px;background:rgba(194,178,128,0.2);border-radius:999px;overflow:hidden;">
+                                    <div style="height:100%;width:<?= $taste[1] ?>%;background:<?= $taste[2] ?>;border-radius:999px;transition:width 1s ease;"></div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="row g-3">
-                        <?php foreach ($selectedProduct['specs'] as $spec): ?>
-                            <?php
+                    <div class="col-lg-6">
+                        <div style="background:var(--linen);border:1px solid rgba(194,178,128,0.3);border-radius:10px;padding:1.5rem;">
+                            <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-light);margin-bottom:1rem;">Tasting Notes</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <?php
+                                $notes = ['Creamy', 'Smooth', 'Sweet', 'Floral', 'Warm', 'Rich'];
+                                foreach ($notes as $note): ?>
+                                    <span class="taste-pill"><?= $note ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                            <hr style="border-color:rgba(194,178,128,0.25);margin:1.25rem 0;">
+                            <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;margin:0;">
+                                Best enjoyed mid-morning or as an afternoon pick-me-up. Pairs well with our pastry selection.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Tab -->
+        <div class="tab-pane fade" id="tab-shipping">
+            <div class="tab-panel">
+                <div class="row g-4">
+                    <?php
+                    $deliveryInfo = [
+                        ['bi-clock-history', 'Preparation Time', '5–10 minutes after order is placed. All drinks are made fresh to order — no pre-made batches.'],
+                        ['bi-scooter', 'Delivery Estimate', '30–45 minutes for Metro Manila. Salcedo, BGC, and Poblacion branches offer 20-minute delivery windows.'],
+                        ['bi-box-seam', 'Packaging', 'All orders use eco-friendly, compostable cups and paper straws. No single-use plastics.'],
+                        ['bi-arrow-repeat', 'Order Changes', 'Modifications accepted within 2 minutes of placing your order via the app or by calling the branch directly.'],
+                    ];
+                    foreach ($deliveryInfo as $info): ?>
+                        <div class="col-md-6">
+                            <div style="background:var(--linen);border:1px solid rgba(194,178,128,0.3);border-radius:10px;padding:1.5rem;height:100%;">
+                                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+                                    <div style="width:38px;height:38px;border-radius:50%;background:rgba(194,178,128,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                        <i class="bi <?= $info[0] ?>" style="color:var(--mocha);font-size:1rem;"></i>
+                                    </div>
+                                    <span style="font-size:0.88rem;font-weight:600;color:var(--espresso);"><?= $info[1] ?></span>
+                                </div>
+                                <p style="font-size:0.85rem;color:var(--text-light);line-height:1.7;margin:0;"><?= $info[2] ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-content -->
+    </div><!-- /container -->
+</section>
+
+<!-- ═══ MODAL ════════════════════════════════════════════════ -->
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header-mf d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="modal-title" id="productDetailModalLabel"><?= html($selectedProduct['name']) ?></div>
+                    <div class="modal-subtitle">"<?= html($selectedProduct['tagline']) ?>"</div>
+                </div>
+                <button type="button" class="btn-close mt-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body-mf">
+
+                <!-- Image with price overlay -->
+                <div class="modal-img-wrap">
+                    <?php if (!empty($selectedProduct['image'])): ?>
+                        <img src="/Mindflayers/pages/ProductListPage/<?= html($selectedProduct['image']) ?>" alt="<?= html($selectedProduct['name']) ?>">
+                    <?php endif; ?>
+                    <div class="modal-img-overlay">
+                        <div>
+                            <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(232,216,176,0.6);margin-bottom:0.2rem;">Starting from</div>
+                            <div class="modal-img-price">₱<?= number_format($selectedProduct['price']) ?></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-content-inner">
+
+                    <!-- Badges + rating -->
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                        <span style="background:rgba(194,178,128,0.2);color:var(--mocha);border:1px solid rgba(194,178,128,0.5);border-radius:999px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem;">
+                            <?= html($selectedProduct['badge']) ?>
+                        </span>
+                        <span style="background:rgba(111,76,62,0.08);color:var(--mocha);border:1px solid rgba(111,76,62,0.2);border-radius:999px;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem;">
+                            <?= html($selectedProduct['category']) ?>
+                        </span>
+                        <span style="color:var(--sand);font-size:0.85rem;">
+                            <?php for ($i = 0; $i < 5; $i++): ?>
+                                <i class="bi bi-star<?= $i < floor($selectedProduct['rating']) ? '-fill' : '' ?>"></i>
+                            <?php endfor; ?>
+                        </span>
+                        <span style="font-size:0.82rem;color:var(--text-light);"><?= number_format($selectedProduct['rating'],1) ?> · <?= html($selectedProduct['reviews']) ?> reviews</span>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="modal-section-title">About this drink</p>
+                    <p style="font-size:0.92rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.5rem;"><?= html($selectedProduct['desc']) ?></p>
+
+                    <!-- Specs grid -->
+                    <p class="modal-section-title">Key Specifications</p>
+                    <div class="spec-grid mb-4">
+                        <?php foreach ($selectedProduct['specs'] as $spec):
                             $specIcon = match(strtolower($spec['label'])) {
                                 'temperature' => 'bi-thermometer-half',
-                                'base' => 'bi-cup-straw',
-                                'milk' => 'bi-droplet-half',
-                                'caffeine' => 'bi-lightning-charge',
-                                default => $spec['icon'] ?? 'bi-chevron-right',
+                                'base'        => 'bi-cup-straw',
+                                'milk'        => 'bi-droplet-half',
+                                'caffeine'    => 'bi-lightning-charge',
+                                default       => $spec['icon'] ?? 'bi-dot',
                             };
-                            ?>
-                            <div class="col-12 col-sm-6 col-xl-4">
-                                <article class="spec-card">
-                                    <div class="spec-card-title">
-                                        <i class="bi <?= html($specIcon) ?> fs-5"></i>
-                                        <?= html($spec['label']) ?>
-                                    </div>
-                                    <div class="spec-card-value"><?= html($spec['value']) ?></div>
-                                </article>
+                        ?>
+                            <div class="spec-card-mf">
+                                <div class="spec-card-icon"><i class="bi <?= html($specIcon) ?>"></i></div>
+                                <div class="spec-card-label"><?= html($spec['label']) ?></div>
+                                <div class="spec-card-value"><?= html($spec['value']) ?></div>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                </section>
 
+                    <!-- Quick info row -->
+                    <p class="modal-section-title">Quick Info</p>
+                    <div class="row g-2 mb-1" style="font-size:0.88rem;">
+                        <div class="col-6 d-flex align-items-center gap-2" style="color:var(--text-mid);">
+                            <i class="bi bi-rulers" style="color:var(--sand);"></i>
+                            <span><strong>Volume:</strong> <?= html($selectedProduct['volume']) ?></span>
+                        </div>
+                        <div class="col-6 d-flex align-items-center gap-2" style="color:var(--text-mid);">
+                            <i class="bi bi-fire" style="color:var(--sand);"></i>
+                            <span><strong>Calories:</strong> <?= html($selectedProduct['calories']) ?></span>
+                        </div>
+                    </div>
 
+                </div>
             </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer-mf">
+                <form method="post" action="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="m-0">
+                    <input type="hidden" name="product_id" value="<?= (int)$selectedProduct['id'] ?>">
+                    <button type="submit" class="btn-add-cart">
+                        <i class="bi bi-cart-fill"></i> Add to Cart
+                    </button>
+                </form>
+                <button class="btn-details" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i> Close
+                </button>
+            </div>
+
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/scripts.js"></script>
-
 </body>
 </html>
