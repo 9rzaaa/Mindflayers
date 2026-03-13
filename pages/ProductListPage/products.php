@@ -371,31 +371,25 @@ foreach ($products as $p) {
             background: radial-gradient(circle at top left, #fffaf3 0%, #fef9f5 55%, #f6efe4 100%);
         }
 
-        .modal-img-main {
-            object-fit: cover;
-            width: 100%;
-            height: 220px;
+        /* Modal: left landscape image gallery */
+        .modal-gallery-left {
+            flex: 0 0 42%;
+            max-width: 42%;
+        }
+        .modal-gallery-main {
+            aspect-ratio: 16 / 10;
             border-radius: 0.65rem;
+            overflow: hidden;
+            background: var(--cream);
+            border: 1px solid #e6dac8;
         }
-
-        .gallery-thumb {
-            width: 68px;
-            height: 56px;
+        .modal-gallery-main img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border: 1px solid #d8cac0;
-            border-radius: 0.45rem;
-            cursor: pointer;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .gallery-thumb:hover {
-            transform: translateY(-2px);
-            border-color: #8b5e3c;
-        }
-
-        .gallery-thumb.active {
-            border-color: #8b5e3c;
-            box-shadow: 0 2px 8px rgba(139, 94, 60, 0.3);
+        @media (max-width: 767px) {
+            .modal-gallery-left { flex: 0 0 100%; max-width: 100%; order: -1; }
         }
 
         /* ═══════════════════════════════
@@ -580,7 +574,7 @@ foreach ($products as $p) {
 
 <!-- Quick view product modal -->
 <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <div>
@@ -590,11 +584,15 @@ foreach ($products as $p) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row g-4 align-items-start">
-                    <div class="col-md-5">
-                        <img id="modal-image" src="" alt="" class="img-fluid rounded" style="object-fit:cover; width:100%; height:100%; min-height:260px; border:1px solid #e6dac8;">
+                <div class="row g-4 align-items-start flex-lg-nowrap">
+                    <!-- Left: single photo -->
+                    <div class="modal-gallery-left col-12 col-lg-5">
+                        <div class="modal-gallery-main">
+                            <img id="modal-image" src="" alt="" class="img-fluid">
+                        </div>
                     </div>
-                    <div class="col-md-7">
+                    <!-- Right: product details -->
+                    <div class="col-12 col-lg-7">
                         <h4 id="modal-name"></h4>
                         <p id="modal-desc" class="mb-3"></p>
                         <div class="mb-2"><strong>Price:</strong> <span id="modal-price"></span></div>
@@ -665,7 +663,7 @@ foreach ($products as $p) {
     function showProductModal(product) {
         if (!product) return;
 
-        const placeholder = 'https://via.placeholder.com/700x420?text=Mindflayer+Coffee';
+        const placeholder = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80';
         const imageUrl = (product.image && product.image.trim()) ? product.image : placeholder;
 
         document.getElementById('productDetailModalLabel').textContent = product.name;
