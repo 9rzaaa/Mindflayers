@@ -437,7 +437,10 @@ foreach ($products as $p) {
             <a href="../../index.php" class="nav-back">
                 <i class="bi bi-arrow-left"></i> Back to Home
             </a>
-            <a href="#" class="btn-nav-order">Order Now</a>
+            <a href="../ShoppingCartPage/shoppingcart.php" class="nav-back">
+                <i class="bi bi-bag"></i> Shopping Cart
+            </a>
+            <a href="../ShoppingCartPage/shoppingcart.php" class="btn-nav-order">Order Now</a>
         </div>
     </div>
 </nav>

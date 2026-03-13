@@ -51,22 +51,65 @@ $shop_name = "Mindflayer";
             text-decoration: none;
         }
 
-        /* Simple top bar to match brand */
-        .checkout-navbar {
+        /* Navbar (matches homepage look) */
+        .navbar {
             background-color: var(--espresso);
-            color: var(--cream);
-            padding: 0.9rem 1.5rem;
+            padding: 1.1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(194, 178, 128, 0.2);
         }
 
-        .checkout-brand {
+        .navbar-brand {
             font-family: var(--font-display);
+            font-size: 1.55rem;
             font-weight: 900;
-            letter-spacing: -0.03em;
-            font-size: 1.4rem;
+            color: var(--cream) !important;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .checkout-brand span.dot {
+        .navbar-brand span.dot {
             color: var(--sand);
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(232, 216, 176, 0.75) !important;
+            font-size: 0.88rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.25rem 1rem !important;
+            transition: color var(--transition);
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--cream) !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--cream) !important;
+        }
+
+        .btn-nav-cta {
+            background-color: var(--sand);
+            color: var(--espresso) !important;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.4rem !important;
+            border-radius: 2px;
+            border: none;
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .btn-nav-cta:hover {
+            background-color: var(--cream);
+            transform: translateY(-1px);
         }
 
         .checkout-wrapper {
@@ -326,16 +369,37 @@ $shop_name = "Mindflayer";
 </head>
 
 <body>
-    <header class="checkout-navbar">
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="../../index.php" class="d-flex align-items-center gap-2 text-decoration-none text-light">
-                <span class="checkout-brand">☕ <?= $shop_name ?><span class="dot">.</span></span>
+    <!-- Navbar (same structure as homepage) -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../../index.php">
+                ☕ <?= $shop_name ?><span class="dot">.</span>
             </a>
-            <a href="../ShoppingCartPage/shoppingcart.php" class="text-light small text-uppercase" style="letter-spacing:0.12em;">
-                <i class="bi bi-bag me-1"></i> Back to Cart
-            </a>
+
+            <button class="border-0 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMainCheckout" aria-controls="navMainCheckout" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="text-warning bi bi-list fs-4"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMainCheckout">
+                <ul class="gap-1 mx-auto navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../AboutPage/about.php">Our Story</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.php#contact">Locations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../ProfilePage/profile.php">Profile</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2">
+                    <a href="../ShoppingCartPage/shoppingcart.php" class="nav-link" style="font-size: 0.85rem;">
+                        Shopping Cart
+                    </a>
+                    <a href="./checkout.php" class="btn-nav-cta nav-link">
+                        Checkout <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="checkout-wrapper">
         <div class="mb-2">

@@ -79,7 +79,12 @@ $iconMap = [
         <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn btn-link text-decoration-none">
             <i class="bi bi-chevron-left"></i> Back to Menu
         </a>
-        <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn btn-outline-dark btn-sm">Menu</a>
+        <div class="d-flex gap-2">
+            <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn btn-outline-dark btn-sm">Menu</a>
+            <a href="/Mindflayers/pages/ShoppingCartPage/shoppingcart.php" class="btn btn-outline-dark btn-sm">
+                Shopping Cart
+            </a>
+        </div>
     </div>
 </header>
 

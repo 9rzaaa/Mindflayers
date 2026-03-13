@@ -474,7 +474,7 @@ $sessionCart = $_SESSION['cart'] ?? [];
                     <p class="mb-3">
                         Add a drink from the menu to see it here. Use the cart to tweak quantities and quickly tidy up your order.
                     </p>
-                    <a href="/" class="btn btn-outline-dark btn-sm">
+                    <a href="/Mindflayers/pages/ProductListPage/products.php" class="btn btn-outline-dark btn-sm">
                         <i class="bi bi-cup-hot me-1"></i>
                         Back to menu
                     </a>
