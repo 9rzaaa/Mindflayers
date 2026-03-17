@@ -444,6 +444,18 @@
     <script>
         const form = document.getElementById('signup-form');
 
+        // Social login handlers
+        document.querySelectorAll('.social-login-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const provider = this.textContent.trim().replace('Continue with ', '');
+                setLoggedIn(`${provider.toLowerCase()}@example.com`);
+                alert(`Signup with ${provider} successful! Redirecting to home page...`);
+                setTimeout(() => {
+                    window.location.href = '../../index.php';
+                }, 500);
+            });
+        });
+
         const fields = {
             name: document.getElementById('name'),
             email: document.getElementById('email'),
